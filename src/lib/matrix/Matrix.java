@@ -80,4 +80,72 @@ public class Matrix {
   public void elementaryRowAdd(int i1, int i2, int factor) throws Exception {
     this.setRow(i1, getMultipliedRow(i2, factor));
   }
+
+  public Matrix copy() {
+    Matrix m = new Matrix(this.nRows, this.nCols);
+    for (int i = 0; i < nRows; i++) {
+      for (int j = 0; j < nCols; j++) {
+        mat.set(i, j, this.get(i, j));
+      }
+    }
+    return m;
+  }
+
+  private int nonZeroRow(int i, int j) {
+    boolean isZero = true;
+    while (i < this.nRows && isZero) {
+      if (this.get(i,j) != 0) {
+        isZero = false;
+      } else {
+        i++;
+      }
+    }
+    return i;
+  }
+
+  public boolean checkValCol(int j, double val) {
+    boolean ada = false;
+    for (int i = 0; i < this.nRows && !ada; i++) {
+      if (this.get(i,j) == val) {
+        ada = true;
+      }
+    }
+    return ada;
+  }
+
+  public Matrix toEchelon() {
+    Matrix result = this.copy();
+    int i = 0;
+    for (int j = 0; j < this.nCols && i < this.nRows; j++) {
+      int row = this.nonZeroRow(i, j);
+      if (row < this.nRows) {
+        result.swapRows(i, row);
+        result.divideRow(i, result.get(i,j));
+        for (int k = i + 1; k < this.nRows; k++) {
+          result.elementaryRowAdd(k, i, -result.get(k,j));
+        }
+        i++;
+      }
+    }
+    return result;
+  }
+
+  public Matrix toReducedEchelon() {
+    Matrix result = this.copy().toEchelon();
+    Vector<int[]> index1utama;
+    for (int i = result.nRows-1; i >= 0; i--) {
+      for (j = 0; j < result.nCols; j++) {
+        if (result.get(i,j) == 1) {
+          index1utama.add({i,j});
+          break;
+        }
+      }
+    }
+    for (int i = 0; i < index1utama.size()-1; i++) {
+      for (int j = i + 1; j < index1utama.size(); j++) {
+        result.elementaryRowAdd(index1utama.get(j)[0], index1utama.get(i)[0], result.get(index1utama.get(j)[0], index1utama.get(j)[1]));
+      }
+    }
+    return result;
+  }
 }
