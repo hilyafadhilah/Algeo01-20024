@@ -107,12 +107,17 @@ public class Matrix {
     this.setRow(i2, tmp);
   }
 
-  private Vector<Double> getMultipliedRow(int i, double factor) throws Exception {
-    if (factor == 0.0) {
-      throw new Exception();
+  private Vector<Double> getRowCopy(int i) {
+    Vector<Double> row = new Vector<>();
+    for (int j = 0; j < this.nCols; j++) {
+      row.add(this.get(i, j));
     }
 
-    Vector<Double> row = this.getRow(i);
+    return row;
+  }
+
+  private Vector<Double> getMultipliedRow(int i, double factor) throws Exception {
+    Vector<Double> row = this.getRowCopy(i);
     for (int j = 0; j < this.nCols; j++) {
       row.set(j, row.get(j) * factor);
     }
@@ -122,6 +127,17 @@ public class Matrix {
 
   public void multiplyRow(int i, double factor) throws Exception {
     this.setRow(i, getMultipliedRow(i, factor));
+  }
+
+  public void divideRow(int i, double k) throws Exception {
+    if (k == 0.0) {
+      throw new Exception();
+    }
+
+    Vector<Double> row = this.getRow(i);
+    for (int j = 0; j < this.nCols; j++) {
+      row.set(j, row.get(j) / k);
+    }
   }
 
   public void elementaryRowAdd(int i1, int i2, int factor) throws Exception {
