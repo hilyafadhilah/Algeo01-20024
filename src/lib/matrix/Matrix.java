@@ -26,6 +26,14 @@ public class Matrix {
     this.matrix = new Vector<>();
   }
 
+  public int getNRows() {
+    return this.nRows;
+  }
+
+  public int getNCols() {
+    return this.nCols;
+  }
+
   public double get(int i, int j) {
     return this.matrix.get(i).get(j);
   }
@@ -118,6 +126,10 @@ public class Matrix {
 
   public boolean isNull() {
     return this.nRows == 0 && this.nCols == 0;
+  }
+
+  public boolean isSquare() {
+    return this.nCols == this.nRows;
   }
 
   public void swapRows(int i1, int i2) throws Exception {
