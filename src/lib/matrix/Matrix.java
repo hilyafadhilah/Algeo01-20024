@@ -11,13 +11,19 @@ public class Matrix {
   public Matrix(int nRows, int nCols) {
     this.nRows = nRows;
     this.nCols = nCols;
-    this.matrix = new Vector<Vector<Double>>(nRows);
+    this.matrix = new Vector<>(nRows);
     for (int i = 0; i < nRows; i++) {
-      this.matrix.add(new Vector<Double>(nCols));
+      this.matrix.add(new Vector<>(nCols));
       for (int j = 0; j < nCols; j++) {
         this.matrix.get(i).add(null);
       }
     }
+  }
+
+  public Matrix() {
+    this.nRows = 0;
+    this.nCols = 0;
+    this.matrix = new Vector<>();
   }
 
   public double get(int i, int j) {
@@ -40,18 +46,59 @@ public class Matrix {
     }
   }
 
-  public static Matrix read(Scanner scanner) {
-    int nRows = scanner.nextInt();
-    int nCols = scanner.nextInt();
+  public static Matrix read(Scanner scanner, int nRows, int nCols) {
     Matrix mat = new Matrix(nRows, nCols);
-
     for (int i = 0; i < nRows; i++) {
+      String line = scanner.nextLine();
+      Scanner lineScanner = new Scanner(line);
+
       for (int j = 0; j < nCols; j++) {
-        mat.set(i, j, scanner.nextFloat());
+        mat.set(i, j, lineScanner.nextDouble());
       }
+
+      lineScanner.close();
     }
 
     return mat;
+  }
+
+  public static Matrix read(Scanner scanner) throws Exception {
+    Matrix mat = new Matrix();
+    int nRows = 0;
+    int nCols = 0;
+
+    int i = 0;
+    while (scanner.hasNextLine()) {
+      mat.matrix.add(new Vector<>());
+
+      String line = scanner.nextLine();
+      Scanner strScanner = new Scanner(line);
+
+      int j = 0;
+      while (strScanner.hasNextDouble()) {
+        Double value = strScanner.nextDouble();
+        mat.matrix.get(i).add(value);
+        j++;
+      }
+
+      if (nCols == 0 && j > 0) {
+        nCols = j;
+      } else if (nCols != j) {
+        strScanner.close();
+        throw new Exception();
+      }
+
+      strScanner.close();
+      i++;
+    }
+
+    mat.nRows = nRows;
+    mat.nCols = nCols;
+    return mat;
+  }
+
+  public boolean isNull() {
+    return this.nRows == 0 && this.nCols == 0;
   }
 
   public void swapRows(int i1, int i2) throws Exception {
