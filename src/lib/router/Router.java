@@ -5,13 +5,40 @@ import java.util.List;
 import lib.utils.IOUtils;
 import lib.utils.CollectionUtils;
 
+/**
+ * Routing class specific to this application.
+ * 
+ * @author Hilya Fadhilah Imania<hilyafadhilah@gmail.com>
+ * @version 0.1.3
+ * @see Route
+ * @since 2021-09-26
+ */
 public class Router {
+  /**
+   * List of routes.
+   * 
+   * @see Route
+   */
   protected List<Route> routes;
 
+  /**
+   * Constructor
+   * 
+   * @param routes List of routes
+   */
   public Router(List<Route> routes) {
     this.routes = routes;
   }
 
+  /**
+   * Run this <code>Router</code> with the assigned <code>routes</code>. It will
+   * do an infinite loop until the user signals EOF or force exit, OR if the user
+   * chooses a route that throws an <code>ExitException</code>.
+   * 
+   * TODO: better error handling
+   * 
+   * @see ExitException
+   */
   public void run() {
     boolean isRunning = true;
 
@@ -51,6 +78,11 @@ public class Router {
     }
   }
 
+  /**
+   * Displays list of <code>routes</code> with a predefined format.
+   * 
+   * @param routes The routes to be displayed
+   */
   private void displayMenu(List<Route> routes) {
     for (Route route : routes) {
       System.out.printf("  %s: %s\n", route.getKey(), route.getLabel());
