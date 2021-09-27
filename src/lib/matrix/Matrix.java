@@ -6,19 +6,25 @@ import java.util.Vector;
 import lib.math.DivisionByZeroException;
 
 /**
+ * <p>
  * Basic matrix class for linear algebra computation. This class is specifically
  * designed for this program.
+ * </p>
  * 
+ * <p>
  * Conventions: As with mathemathical matrix, the size of a matrix is denoted as
  * <code>m</code> ✕ <code>n</code> with <code>m</code> being the number of rows
  * and <code>n</code> being the number of columns. Each element has a "location"
  * of <code>(i,j)</code> with <code>i</code> being the row and <code>j</code>
  * being the column of the element in respect to the matrix.
+ * </p>
  * 
+ * <p>
  * Notable difference with mathematical matrix is the starting element of this
  * matrix is located at index <code>(0,0)</code> not <code>(1,1)</code> and the
  * endmost element is located at index <code>(m-1,n-1)</code> not
  * <code>(m,n)</code>.
+ * </p>
  * 
  * @author Hilya Fadhilah Imania<hilyafadhilah@gmail.com>
  * @version 0.1.3
@@ -206,16 +212,20 @@ public class Matrix {
   }
 
   /**
+   * <p>
    * Read a matrix value from a specified input scanner with defined row and
    * column length. Each line in the input stream must consists of
    * <code>nCols</code> number of valid double values separated by whitespace.
+   * </p>
    * 
+   * <p>
    * Example: A 2x3 matrix
    * 
    * <pre>
    * 1.0 2.0 3.0
    * 4.0 5.0 6.0
    * </pre>
+   * </p>
    * 
    * @param scanner The input scanner
    * @param nRows   Number of rows to be read
@@ -328,6 +338,22 @@ public class Matrix {
    */
   public boolean isSquare() {
     return this.nCols == this.nRows;
+  }
+
+  /**
+   * Checks if a specified value exists within a column.
+   * 
+   * @param j   Column index
+   * @param val The value to be compared
+   * @return True if <code>val</code> exists in column <code>j</code>
+   */
+  public boolean isValueInCol(int j, double val) {
+    for (int i = 0; i < this.nRows; i++) {
+      if (this.get(i, j) == val) {
+        return true;
+      }
+    }
+    return false;
   }
 
   /**
@@ -512,22 +538,6 @@ public class Matrix {
     }
 
     return -1;
-  }
-
-  /**
-   * Checks if a specified value exists within a column.
-   * 
-   * @param j   Column index
-   * @param val The value to be compared
-   * @return True if <code>val</code> exists in column <code>j</code>
-   */
-  public boolean isValueInCol(int j, double val) {
-    for (int i = 0; i < this.nRows; i++) {
-      if (this.get(i, j) == val) {
-        return true;
-      }
-    }
-    return false;
   }
 
   /**
