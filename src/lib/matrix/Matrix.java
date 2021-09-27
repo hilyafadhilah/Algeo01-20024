@@ -66,7 +66,7 @@ public class Matrix {
   /**
    * Constructor with undefined number of rows and columns. Creates a null matrix.
    * 
-   * @see isNull()
+   * @see #isNull()
    */
   public Matrix() {
     this.nRows = 0;
@@ -379,8 +379,8 @@ public class Matrix {
    * 
    * @param i      Row index
    * @param factor Multiplication factor
-   * @see getMultipledRow()
-   * @see setRow()
+   * @see #getMultipledRow(int, double)
+   * @see #setRow(int, Vector)
    */
   public void multiplyRow(int i, double factor) {
     this.setRow(i, getMultipliedRow(i, factor));
@@ -502,7 +502,7 @@ public class Matrix {
    * @return The index of row. Can return <code>iStart</code> if
    *         (<code>iStart</code>, <code>j</code>) is non-zero. Returns
    *         <code>-1</code> if not found.
-   * @see toEchelon()
+   * @see #toEchelon()
    */
   private int pivotRowIndex(int iStart, int j) {
     for (int i = iStart; i < this.nRows; i++) {
