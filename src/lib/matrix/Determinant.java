@@ -3,7 +3,7 @@ package lib.matrix;
 public class Determinant {
   public static double cofactorMethod(Matrix mat) throws Exception {
     if (!mat.isSquare()) {
-      throw new Exception();
+      throw new NotSquareMatrixException();
     }
 
     // Basis
@@ -17,14 +17,7 @@ public class Determinant {
       for (int col = 0; col < size; col++) {
         /* Baris acuan: Baris pertama */
         /* Buat kofaktor */
-        Matrix cofactor = new Matrix(size - 1, size - 1);
-        for (int i = 1; i < size; i++) {
-          for (int j = 0; j < size; j++) {
-            if (j != col) {
-              cofactor.set(i - 1, (j < col ? j : j - 1), mat.get(i, j));
-            }
-          }
-        }
+        Matrix cofactor = mat.cofactor(0, col);
 
         /* Hitung faktor penambah */
         double addend = mat.get(0, col) * cofactorMethod(cofactor);
