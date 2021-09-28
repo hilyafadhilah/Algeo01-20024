@@ -57,7 +57,26 @@ public class Determinant {
    * @return The determinant of <code>mat</code>
    * @throws NotSquareMatrixException If the matrix is not square in size
    */
-  public static double reductionMethod(Matrix mat) throws NotSquareMatrixException {
-    return 0.0;
+  public static double reductionMethod(Matrix mat) throws Exception {
+    Matrix mTemp;
+    mTemp = mat.copy();
+    int i, j, k;
+    i = 0;
+    double det = 1;
+    for (j = 0; j < mTemp.getNCols() && i < mTemp.getNRows(); j++) {
+      if (mTemp.pivotRowIndex(i, j) < mTemp.getNRows()) {
+        mTemp.swapRows(i, mTemp.pivotRowIndex(i, j));
+        if (mTemp.pivotRowIndex(i, j) != i) {
+          det *= -1;
+        }
+        det *= mTemp.get(i, j);
+        mTemp.divideRow(i, mTemp.get(i, j));
+        for (k = i + 1; k < mTemp.getNRows(); k++) {
+          mTemp.elementaryRowAdd(k, i, -mTemp.get(k, j));
+        }
+        i++;
+      }
+    }
+    return det;
   }
 }
