@@ -231,19 +231,24 @@ public class Matrix {
    * @param nRows   Number of rows to be read
    * @param nCols   Number of columns to be read
    * @return New <code>Matrix</code> with specified size
-   * @throws Exception If read fails (likely invalid matrix input)
+   * @throws InvalidMatrixException If read fails (likely invalid matrix input)
    */
-  public static Matrix read(Scanner scanner, int nRows, int nCols) throws Exception {
+  public static Matrix read(Scanner scanner, int nRows, int nCols) throws InvalidMatrixException {
     Matrix mat = new Matrix(nRows, nCols);
-    for (int i = 0; i < nRows; i++) {
-      String line = scanner.nextLine();
-      Scanner lineScanner = new Scanner(line);
 
-      for (int j = 0; j < nCols; j++) {
-        mat.set(i, j, lineScanner.nextDouble());
+    try {
+      for (int i = 0; i < nRows; i++) {
+        String line = scanner.nextLine();
+        Scanner lineScanner = new Scanner(line);
+
+        for (int j = 0; j < nCols; j++) {
+          mat.set(i, j, lineScanner.nextDouble());
+        }
+
+        lineScanner.close();
       }
-
-      lineScanner.close();
+    } catch (Exception e) {
+      throw new InvalidMatrixException();
     }
 
     return mat;
@@ -254,9 +259,9 @@ public class Matrix {
    * 
    * @param scanner The input scanner to be read from
    * @return New valid <code>Matrix</code>
-   * @throws Exception If read fails (likely invalid matrix input)
+   * @throws InvalidMatrixException If read fails (likely invalid matrix input)
    */
-  public static Matrix read(Scanner scanner) throws Exception {
+  public static Matrix read(Scanner scanner) throws InvalidMatrixException {
     Matrix mat = new Matrix();
     int nCols = 0;
 

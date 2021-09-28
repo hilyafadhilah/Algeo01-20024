@@ -1,6 +1,7 @@
 package lib.utils;
 
 import java.io.File;
+import java.util.NoSuchElementException;
 import java.util.Scanner;
 
 import lib.matrix.Matrix;
@@ -100,14 +101,22 @@ public class IOUtils {
     Matrix mat = null;
     int nRows = 0, nCols = 0;
 
-    String line = prompt();
+    printHeader("Input Matriks");
+    System.out.print("\nMasukkan ukuran matriks dengan format [baris]<spasi>[kolom].\n"
+        + "Jika matriks dalam file, langsung masukkan path file tersebut.\n\n");
+
+    String line = prompt("matriks>");
     Scanner lineScanner = new Scanner(line);
 
     try {
       nRows = lineScanner.nextInt();
       nCols = lineScanner.nextInt();
+
+      System.out.print("\nMasukkan elemen matriks, setiap baris dipisah dengan newline\n"
+          + "dan setiap elemen dalam satu baris dipisah dengan spasi.\n\n");
+
       mat = Matrix.read(stdinScanner, nRows, nCols);
-    } catch (Exception e) {
+    } catch (NoSuchElementException e) {
       file = new File(line);
       Scanner scanner = new Scanner(file);
       mat = Matrix.read(scanner);
@@ -136,6 +145,13 @@ public class IOUtils {
     }
 
     System.out.print(header);
+  }
+
+  /**
+   * Display a divider
+   */
+  public static void printDivider() {
+    System.out.println(repeat("=", 60));
   }
 
   /**
