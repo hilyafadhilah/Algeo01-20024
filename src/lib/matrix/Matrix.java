@@ -311,7 +311,8 @@ public class Matrix {
 
     for (int i = 0; i < this.nRows; i++) {
       for (int j = 0; j < this.nCols; j++) {
-        output += this.get(i, j);
+        double value = this.get(i, j);  
+        output += value == 0.0 ? 0.0 : value;
 
         if (j + 1 != this.nCols) {
           output += " ";
