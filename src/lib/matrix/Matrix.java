@@ -536,7 +536,7 @@ public class Matrix {
    *         <code>-1</code> if not found.
    * @see #toEchelon()
    */
-  private int pivotRowIndex(int iStart, int j) {
+  public int pivotRowIndex(int iStart, int j) {
     for (int i = iStart; i < this.nRows; i++) {
       if (this.get(i, j) != 0.0) {
         return i;
