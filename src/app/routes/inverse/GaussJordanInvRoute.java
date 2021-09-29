@@ -1,9 +1,21 @@
 package app.routes.inverse;
 
 import lib.router.Route;
+import lib.matrix.Inverse;
+import lib.matrix.Matrix;
+import lib.utils.IOUtils;
 
 public class GaussJordanInvRoute extends Route {
   public GaussJordanInvRoute(String key) {
     super(key, "Metode Gauss-Jordan");
+  }
+
+  public void run() throws Exception {
+    Matrix m = IOUtils.inputMatrix(true);
+    Matrix mInvers = Inverse.GaussMethod(m);
+    System.out.println("Hasil Matriks Invers : ");
+    System.out.println();
+    System.out.print(mInvers.toString());
+    System.out.println();
   }
 }
