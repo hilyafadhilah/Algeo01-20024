@@ -2,6 +2,7 @@ package lib.matrix;
 
 import java.util.Scanner;
 import java.util.Vector;
+import lib.matrix.Determinant;
 
 import lib.math.DivisionByZeroException;
 
@@ -27,6 +28,7 @@ import lib.math.DivisionByZeroException;
  * </p>
  * 
  * @author Hilya Fadhilah Imania<hilyafadhilah@gmail.com>
+ * @author Roby Purnomo<robypurnom@gmail.com>
  * @version 0.1.3
  * @since 2021-09-24
  */
@@ -603,5 +605,56 @@ public class Matrix {
     }
 
     return result;
+  }
+
+  public Matrix transpose() {
+    double Temp;
+    Matrix m = this.copy();
+    for (int i = 0; i < m.getNRows(); i++) {
+      for (int j = i; j < m.getNCols(); j++) {
+        Temp = m.get(i, j);
+        m.set(i, j, m.get(j, i));
+        m.set(j, i, Temp);
+      }
+    }
+    return m;
+  }
+
+  public Matrix toCofactor() throws Exception {
+    Matrix mCofactor = this.copy();
+    Matrix subMatrix;
+    int lastidx = this.getNCols()-1;
+    for (int i = 0; i <= lastidx; i++) {
+      for (int j = 0; j <= lastidx; j++) {
+        subMatrix = this.cofactor(i, j);
+        if ((i+j) % 2 == 1) {
+          mCofactor.set(i, j, -Determinant.cofactorMethod(subMatrix));
+        } else {
+          mCofactor.set(i, j, Determinant.cofactorMethod(subMatrix));
+        }
+      }
+    }
+    return mCofactor;
+  }
+
+  public Matrix divide (double x) {
+    Matrix m = this.copy();
+    for (int i = 0; i < m.getNRows(); i++) {
+      for (int j = 0; j < m.getNCols(); j++) {
+        m.set(i, j, m.get(i, j)/x);
+      }
+    }
+    return m;
+  }
+
+  public Matrix invers() throws Exception {
+    Matrix m = this.copy();
+    if (Determinant.cofactorMethod(m) != 0) {
+      Matrix mCofactor = m.toCofactor().transpose();
+      Matrix mInvers = mCofactor.divide(Determinant.cofactorMethod(m));
+      return mInvers;
+    } else {
+      throw new Exception();
+    }
   }
 }
