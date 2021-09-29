@@ -8,7 +8,7 @@ import lib.matrix.NotSquareMatrixException;
 import lib.system.Interpolation;
 
 /**
- * Utilities for I/O, specific to this application.
+ * Utilities for input, specific to this application.
  * 
  * @author Hilya Fadhilah Imania<hilyafadhilah@gmail.com>
  * @version 0.1.4

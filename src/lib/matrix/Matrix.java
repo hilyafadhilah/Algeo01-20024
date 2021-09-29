@@ -312,7 +312,7 @@ public class Matrix {
 
     for (int i = 0; i < this.nRows; i++) {
       for (int j = 0; j < this.nCols; j++) {
-        double value = this.get(i, j);  
+        double value = this.get(i, j);
         output += value == 0.0 ? 0.0 : value;
 
         if (j + 1 != this.nCols) {
@@ -381,7 +381,7 @@ public class Matrix {
    * @param i Row index
    * @return Raw copy of row <code>i</code>
    */
-  private Vector<Double> getRowCopy(int i) {
+  public Vector<Double> getRowCopy(int i) {
     Vector<Double> row = new Vector<>();
     for (int j = 0; j < this.nCols; j++) {
       row.add(this.get(i, j));
@@ -558,7 +558,7 @@ public class Matrix {
     Matrix result = this.copy();
 
     int i = 0;
-    for (int j = 0; j < this.nCols-1 && i < this.nRows; j++) {
+    for (int j = 0; j < this.nCols && i < this.nRows; j++) {
       int pivotRow = result.pivotRowIndex(i, j);
 
       if (pivotRow != -1) {
@@ -586,16 +586,7 @@ public class Matrix {
    */
   public Matrix toReducedEchelon() throws DivisionByZeroException {
     Matrix result = this.copy().toEchelon();
-    Vector<int[]> pivots = new Vector<>();
-
-    for (int i = result.nRows - 1; i >= 0; i--) {
-      for (int j = 0; j < result.nCols -1; j++) {
-        if (result.get(i, j) == 1) {
-          pivots.add(new int[] { i, j });
-          break;
-        }
-      }
-    }
+    Vector<int[]> pivots = result.getPivots();
 
     for (int i = 0; i < pivots.size() - 1; i++) {
       for (int j = i + 1; j < pivots.size(); j++) {
@@ -604,6 +595,21 @@ public class Matrix {
     }
 
     return result;
+  }
+
+  public Vector<int[]> getPivots() {
+    Vector<int[]> pivots = new Vector<>();
+
+    for (int i = this.nRows - 1; i >= 0; i--) {
+      for (int j = 0; j < this.nCols; j++) {
+        if (this.get(i, j) == 1) {
+          pivots.add(new int[] { i, j });
+          break;
+        }
+      }
+    }
+
+    return pivots;
   }
 
   public Matrix transpose() {
@@ -622,11 +628,11 @@ public class Matrix {
   public Matrix toCofactor() throws Exception {
     Matrix mCofactor = this.copy();
     Matrix subMatrix;
-    int lastidx = this.getNCols()-1;
+    int lastidx = this.getNCols() - 1;
     for (int i = 0; i <= lastidx; i++) {
       for (int j = 0; j <= lastidx; j++) {
         subMatrix = this.cofactor(i, j);
-        if ((i+j) % 2 == 1) {
+        if ((i + j) % 2 == 1) {
           mCofactor.set(i, j, -Determinant.cofactorMethod(subMatrix));
         } else {
           mCofactor.set(i, j, Determinant.cofactorMethod(subMatrix));
@@ -636,11 +642,11 @@ public class Matrix {
     return mCofactor;
   }
 
-  public Matrix divide (double x) {
+  public Matrix divide(double x) {
     Matrix m = this.copy();
     for (int i = 0; i < m.getNRows(); i++) {
       for (int j = 0; j < m.getNCols(); j++) {
-        m.set(i, j, m.get(i, j)/x);
+        m.set(i, j, m.get(i, j) / x);
       }
     }
     return m;
@@ -657,7 +663,7 @@ public class Matrix {
     }
   }
 
-  public Matrix multiplyMatrix (Matrix m) throws Exception {
+  public Matrix multiplyMatrix(Matrix m) throws Exception {
     if (this.getNCols() == m.getNRows()) {
       Matrix mResult = new Matrix(this.getNRows(), m.getNCols());
       for (int i = 0; i < mResult.getNRows(); i++) {
