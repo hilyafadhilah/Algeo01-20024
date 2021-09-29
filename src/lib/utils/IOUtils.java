@@ -108,8 +108,9 @@ public class IOUtils {
     Matrix mat = null;
 
     printHeader("Input Matriks", "-");
-    System.out.print("\nMasukkan ukuran matriks dalam bilangan bulat, dengan format\n" + " [baris]<spasi>[kolom]\n"
-        + "Jika matriks dalam file, masukkan path file tersebut\n\n");
+    System.out.print(
+        "\nMasukkan ukuran matriks dalam bilangan bulat,\n" + "dengan format \"[jumlah baris]<spasi>[jumlah kolom]\"\n"
+            + "Jika matriks dalam file, masukkan path file tersebut\n\n");
 
     String line = prompt("matriks>");
     Scanner lineScanner = new Scanner(line);
@@ -226,6 +227,72 @@ public class IOUtils {
     intpl.setSearchValue(promptDouble());
 
     return intpl;
+  }
+
+  /**
+   * <p>
+   * Asks the user to input regression data and return it as <code>Matrix</code>.
+   * </p>
+   * 
+   * <p>
+   * First, this function assumes that the user inputs two integers separated by
+   * whitespace in a line, which denotes the number of data samples and variables.
+   * If it successfully does that, then it tries to input matrix from stdin using
+   * the specified size.
+   * </p>
+   * 
+   * <p>
+   * If it fails to read two integers, it assumes that the whole line is a
+   * filename. Then it tries to read the file.
+   * </p>
+   * 
+   * <p>
+   * If it fails to read the file, an exception will be thrown automatically.
+   * </p>
+   * 
+   * @return The matrix of data regression from user input
+   * @throws Exception If input is invalid
+   * @see #inputMatrix(boolean)
+   */
+  public static Matrix inputRegression() throws Exception {
+    Matrix mat = null;
+
+    printHeader("Input Data Regresi", "-");
+    System.out.print("\nMasukkan jumlah sampel dan variabel bebas dalam bilangan bulat,\n"
+        + "dengan format \"[jumlah sampel]<spasi>[jumlah variabel]\"\n"
+        + "Jika data regresi dalam file, masukkan path file tersebut\n\n");
+
+    String line = prompt("regresi>");
+    Scanner lineScanner = new Scanner(line);
+
+    try {
+      if (!lineScanner.hasNextInt()) {
+        throw new ScanFileException();
+      }
+
+      int nRows = lineScanner.nextInt();
+
+      if (!lineScanner.hasNextInt()) {
+        throw new ScanFileException();
+      }
+
+      int nCols = lineScanner.nextInt() + 1;
+
+      System.out.print(
+          "\nMasukkan data regresi. Setiap data berada pada satu baris.\n" + "Setiap baris berisi nilai " + (nCols - 1)
+              + " variabel bebas diikuti nilai variabel hasil,\n" + "dengan setiap variabel dipisah dengan spasi.\n\n");
+
+      mat = Matrix.read(stdinScanner, nRows, nCols);
+    } catch (ScanFileException e) {
+      File file = new File(line);
+      Scanner scanner = new Scanner(file);
+      mat = Matrix.read(scanner);
+      scanner.close();
+    } finally {
+      lineScanner.close();
+    }
+
+    return mat;
   }
 
   /**
