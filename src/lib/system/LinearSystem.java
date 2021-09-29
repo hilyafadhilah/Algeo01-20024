@@ -17,6 +17,13 @@ import lib.system.CannotSolveException.Method;
  */
 public class LinearSystem {
   /**
+   * SolutionType types
+   */
+  public enum SolutionType {
+    UNIQUE, INFINITE, NONE
+  }
+
+  /**
    * Solve linear system using Cramer's rule
    * 
    * @param m The system in augmented matrix form, n x (n+1) <code>Matrix</code>
@@ -70,5 +77,39 @@ public class LinearSystem {
     }
 
     return result;
+  }
+
+  /**
+   * Check solution type of a system in augmented row echelon matrix form
+   * 
+   * @param mEchelon Linear system in augmented row echelon matrix form
+   * @return SolutionType type
+   */
+  public static SolutionType checkSolutionType(Matrix mEchelon) {
+    boolean isAllZero = true;
+    int i;
+    for (i = mEchelon.getNRows() - 1; i >= 0 && isAllZero; i--) {
+      isAllZero = true;
+      for (int j = 0; j <= mEchelon.getNCols() - 1 && isAllZero; j++) {
+        if (mEchelon.get(i, j) != 0) {
+          isAllZero = false;
+        }
+      }
+    }
+    i++;
+    isAllZero = true;
+    for (int j = 0; j < mEchelon.getNCols() - 1 && isAllZero; j++) {
+      if (mEchelon.get(i, j) != 0) {
+        isAllZero = false;
+      }
+    }
+
+    if (isAllZero && mEchelon.get(i, mEchelon.getNCols() - 1) != 0) {
+      return SolutionType.NONE;
+    } else if (i + 1 == mEchelon.getNCols() - 1) {
+      return SolutionType.UNIQUE;
+    } else {
+      return SolutionType.INFINITE;
+    }
   }
 }
