@@ -107,7 +107,7 @@ public class IOUtils {
     File file = null;
     Matrix mat = null;
 
-    printHeader("Input Matriks", "-");
+    printSubheader("Input Matriks");
     System.out.print(
         "\nMasukkan ukuran matriks dalam bilangan bulat,\n" + "dengan format \"[jumlah baris]<spasi>[jumlah kolom]\"\n"
             + "Jika matriks dalam file, masukkan path file tersebut\n\n");
@@ -190,7 +190,7 @@ public class IOUtils {
   public static Interpolation inputInterpolation() throws Exception {
     Interpolation intpl = new Interpolation();
 
-    printHeader("Input Interpolasi", "-");
+    printSubheader("Input Interpolasi");
     System.out.print("\nMasukkan jumlah titik dalam bilangan bulat.\n"
         + "Jika titik dalam file, langsung masukkan path file tersebut.\n\n");
 
@@ -257,7 +257,7 @@ public class IOUtils {
   public static Matrix inputRegression() throws Exception {
     Matrix mat = null;
 
-    printHeader("Input Data Regresi", "-");
+    printSubheader("Input Data Regresi");
     System.out.print("\nMasukkan jumlah sampel dan variabel bebas dalam bilangan bulat,\n"
         + "dengan format \"[jumlah sampel]<spasi>[jumlah variabel]\"\n"
         + "Jika data regresi dalam file, masukkan path file tersebut\n\n");
@@ -322,6 +322,15 @@ public class IOUtils {
    */
   public static void printHeader(String title) {
     printHeader(title, "=");
+  }
+
+  /**
+   * Display a subheader with a specified title.
+   * 
+   * @param title The title
+   */
+  public static void printSubheader(String title) {
+    printHeader(title, "-");
   }
 
   /**
