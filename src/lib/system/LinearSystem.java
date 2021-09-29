@@ -36,4 +36,17 @@ public class LinearSystem {
 
     return solution;
   }
+
+  public static Matrix completeAugmentedMatrix(Matrix m) {
+    Matrix result = m.copy();
+    int currentRows = m.getNRows();
+    int idealRows = m.getNCols() - 1; // Supposed row length
+
+    if (currentRows < idealRows) {
+      result.addRows(idealRows - currentRows);
+      result.setAll(0.0, currentRows, 0);
+    }
+
+    return result;
+  }
 }
