@@ -4,8 +4,8 @@ package lib.matrix;
  * <code>Matrix</code> determinant calculator.
  * 
  * @author Hilya Fadhilah Imania<hilyafadhilah@gmail.com>
- * @author [TODO]
- * @version 0.1.1
+ * @author Roby Purnomo
+ * @version 0.1.2
  * @see Matrix
  * @since 2021-09-24
  */
@@ -51,32 +51,36 @@ public class Determinant {
   }
 
   /**
-   * [TODO]
+   * Compute determinant of a <code>Matrix</code> using the matrix reduction
+   * method.
    * 
    * @param mat The <code>Matrix</code>, must be square
    * @return The determinant of <code>mat</code>
    * @throws NotSquareMatrixException If the matrix is not square in size
    */
   public static double reductionMethod(Matrix mat) throws Exception {
-    Matrix mTemp;
-    mTemp = mat.copy();
-    int i, j, k;
-    i = 0;
+    Matrix mTemp = mat.copy();
     double det = 1;
-    for (j = 0; j < mTemp.getNCols() && i < mTemp.getNRows(); j++) {
+
+    int i = 0;
+    for (int j = 0; j < mTemp.getNCols() && i < mTemp.getNRows(); j++) {
       if (mTemp.pivotRowIndex(i, j) < mTemp.getNRows()) {
         mTemp.swapRows(i, mTemp.pivotRowIndex(i, j));
         if (mTemp.pivotRowIndex(i, j) != i) {
           det *= -1;
         }
+
         det *= mTemp.get(i, j);
         mTemp.divideRow(i, mTemp.get(i, j));
-        for (k = i + 1; k < mTemp.getNRows(); k++) {
+
+        for (int k = i + 1; k < mTemp.getNRows(); k++) {
           mTemp.elementaryRowAdd(k, i, -mTemp.get(k, j));
         }
+
         i++;
       }
     }
+
     return det;
   }
 }

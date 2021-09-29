@@ -52,7 +52,7 @@ public class Router {
         displayMenu(routes);
 
         try {
-          String key = IOUtils.prompt(">");
+          String key = IOUtils.prompt("menu>");
           route = CollectionUtils.find(routes, r -> r.getKey().equals(key));
 
           if (route != null) {
