@@ -597,6 +597,11 @@ public class Matrix {
     return result;
   }
 
+  /**
+   * Find location of pivots
+   * 
+   * @return List of location of pivots in (i,j) format
+   */
   public Vector<int[]> getPivots() {
     Vector<int[]> pivots = new Vector<>();
 
@@ -612,6 +617,11 @@ public class Matrix {
     return pivots;
   }
 
+  /**
+   * Creates a transposed copy of this matrix
+   * 
+   * @return Transposed matrix
+   */
   public Matrix transpose() {
     double Temp;
     Matrix m = this.copy();
@@ -625,7 +635,17 @@ public class Matrix {
     return m;
   }
 
-  public Matrix toCofactor() throws Exception {
+  /**
+   * Creates a cofactor matrix of this matrix
+   * 
+   * @return Cofactor matrix
+   * @throws NotSquareMatrixException If matrix is not square
+   */
+  public Matrix toCofactor() throws NotSquareMatrixException {
+    if (!this.isSquare()) {
+      throw new NotSquareMatrixException();
+    }
+
     Matrix mCofactor = this.copy();
     Matrix subMatrix;
     int lastidx = this.getNCols() - 1;
@@ -639,9 +659,16 @@ public class Matrix {
         }
       }
     }
+
     return mCofactor;
   }
 
+  /**
+   * Divide all elements with a constant
+   * 
+   * @param x Divider
+   * @return Result
+   */
   public Matrix divide(double x) {
     Matrix m = this.copy();
     for (int i = 0; i < m.getNRows(); i++) {
@@ -663,6 +690,14 @@ public class Matrix {
     }
   }
 
+  /**
+   * Multiply this matrix with another matrix. Condition: the number of columns of
+   * this matrix must match the number of rows of the multiplicator.
+   * 
+   * @param m Multiplicator
+   * @return Result
+   * @throws Exception If the size condition is not met
+   */
   public Matrix multiplyMatrix(Matrix m) throws Exception {
     if (this.getNCols() == m.getNRows()) {
       Matrix mResult = new Matrix(this.getNRows(), m.getNCols());
