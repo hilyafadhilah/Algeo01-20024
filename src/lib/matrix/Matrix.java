@@ -2,7 +2,6 @@ package lib.matrix;
 
 import java.util.Scanner;
 import java.util.Vector;
-import lib.matrix.Determinant;
 
 import lib.math.DivisionByZeroException;
 
@@ -653,6 +652,24 @@ public class Matrix {
       Matrix mCofactor = m.toCofactor().transpose();
       Matrix mInvers = mCofactor.divide(Determinant.cofactorMethod(m));
       return mInvers;
+    } else {
+      throw new Exception();
+    }
+  }
+
+  public Matrix multiplyMatrix (Matrix m) throws Exception {
+    if (this.getNCols() == m.getNRows()) {
+      Matrix mResult = new Matrix(this.getNRows(), m.getNCols());
+      for (int i = 0; i < mResult.getNRows(); i++) {
+        for (int j = 0; j < mResult.getNCols(); j++) {
+          double temp = 0.0;
+          for (int k = 0; k < this.getNCols(); k++) {
+            temp += this.get(i, k) * m.get(k, j);
+          }
+          mResult.set(i, j, temp);
+        }
+      }
+      return mResult;
     } else {
       throw new Exception();
     }
