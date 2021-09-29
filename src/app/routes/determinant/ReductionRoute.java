@@ -1,7 +1,7 @@
 package app.routes.determinant;
 
 import lib.router.Route;
-import lib.utils.IOUtils;
+import lib.utils.InputUtils;
 import lib.matrix.Matrix;
 import lib.matrix.Determinant;
 
@@ -11,7 +11,7 @@ public class ReductionRoute extends Route {
   }
 
   public void run() throws Exception {
-    Matrix m = IOUtils.inputMatrix(true);
+    Matrix m = InputUtils.inputMatrix(true);
     double det = Determinant.reductionMethod(m);
     System.out.println("\nDeterminan matriks = " + det);
   }

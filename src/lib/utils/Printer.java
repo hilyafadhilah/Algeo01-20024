@@ -1,0 +1,120 @@
+package lib.utils;
+
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.NoSuchElementException;
+
+/**
+ * A printer that can save its output to a file.
+ * 
+ * @author Hilya Fadhilah Imania<hilyafadhilah@gmail.com>
+ * @version 0.1.0
+ * @see java.io.PrintWriter
+ * @since 2021-09-30
+ */
+public class Printer {
+  /**
+   * Buffer for saving output
+   */
+  private ArrayList<String> buffer = new ArrayList<>();
+
+  /**
+   * Print and save to buffer
+   * 
+   * @param s String
+   * @see java.io.PrintWriter#print(String)
+   */
+  public void print(String s) {
+    System.out.print(s);
+    buffer.add(s);
+  }
+
+  /**
+   * Print and save to buffer
+   * 
+   * @param x Object
+   * @see java.io.PrintWriter#print(Object)
+   */
+  public void print(Object x) {
+    System.out.print(x);
+    buffer.add(String.valueOf(x));
+  }
+
+  /**
+   * Print line and save to buffer
+   * 
+   * @param s String
+   * @see java.io.PrintWriter#println(String)
+   */
+  public void println(String s) {
+    System.out.println(s);
+    buffer.add(s);
+  }
+
+  /**
+   * Print object using {@link java.io.PrintWriter#println(Object)} and save to
+   * buffer
+   * 
+   * @param x Object
+   * @see java.io.PrintWriter#println(Object)
+   */
+  public void println(Object x) {
+    System.out.println(x);
+    buffer.add(String.valueOf(x));
+  }
+
+  /**
+   * Display a header with a specified title, then save to buffer.
+   * 
+   * @param title The title
+   */
+  public void printHeader(String title) {
+    String heading = OutputUtils.getHeading(title, OutputUtils.headerPadding);
+    System.out.print(heading);
+
+    if (this.buffer.isEmpty()) {
+      this.buffer.add(heading.stripLeading());
+    } else {
+      this.buffer.add(heading);
+    }
+  }
+
+  /**
+   * Display a subheader with a specified title, then save to buffer.
+   * 
+   * @param title The title
+   */
+  public void printSubheader(String title) {
+    String heading = OutputUtils.getHeading(title, OutputUtils.subheaderPadding);
+    System.out.print(heading);
+    this.buffer.add(heading.strip());
+  }
+
+  /**
+   * Prompts the user for a file path then store its buffered output. If the user
+   * enters none, it skips ahead.
+   * 
+   * @throws FileNotFoundException
+   * @throws SecurityException
+   */
+  public void toFile() throws FileNotFoundException, SecurityException {
+    OutputUtils.printHeader("Simpan output ke dalam file?");
+    System.out.println("\nJika ya, masukkan path file. Jika tidak, kosongkan.");
+
+    try {
+      String path = InputUtils.prompt("file>");
+      File file = new File(path);
+
+      PrintWriter writer = new PrintWriter(file);
+      for (String line : this.buffer) {
+        writer.println(line);
+      }
+
+      writer.close();
+    } catch (NoSuchElementException e) {
+      // skip
+    }
+  }
+}

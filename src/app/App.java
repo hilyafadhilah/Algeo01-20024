@@ -2,13 +2,13 @@ package app;
 
 import app.routes.Routes;
 import lib.router.Router;
-import lib.utils.IOUtils;
+import lib.utils.InputUtils;
 
 public class App {
   public static void main(String[] args) throws Exception {
-    IOUtils.init();
+    InputUtils.init();
     Router router = new Router(Routes.getRoutes());
     router.run();
-    IOUtils.close();
+    InputUtils.close();
   }
 }

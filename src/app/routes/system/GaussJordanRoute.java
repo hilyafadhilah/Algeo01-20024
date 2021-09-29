@@ -6,7 +6,7 @@ import lib.system.LinearSystem;
 import lib.system.LinearSystem.SolutionType;
 
 import java.util.Vector;
-import lib.utils.IOUtils;
+import lib.utils.InputUtils;
 
 public class GaussJordanRoute extends Route {
   public GaussJordanRoute(String key) {
@@ -17,7 +17,7 @@ public class GaussJordanRoute extends Route {
     char alfabet[] = { 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's',
         't', 'u', 'v', 'w', 'x', 'y', 'z' };
 
-    Matrix m = IOUtils.inputMatrix();
+    Matrix m = InputUtils.inputMatrix();
     Matrix mReducedEchelon = m.toReducedEchelon();
     SolutionType type = LinearSystem.checkSolutionType(mReducedEchelon);
 
@@ -92,5 +92,72 @@ public class GaussJordanRoute extends Route {
       System.out.println("Tidak ada solusi");
     }
     System.out.println();
+  }
+
+  private String[] solveInfinite(Matrix mRed) {
+    char alfabet[] = { 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's',
+        't', 'u', 'v', 'w', 'x', 'y', 'z' };
+
+    int nCols = mRed.getNCols();
+    String[] solutions = new String[nCols - 1];
+    Vector<int[]> pivots = mRed.getPivots();
+
+    // Check if each columns contains a pivot
+    // Keep in mind, column with no pivot is a parameter
+    boolean[] columnHasPivot = new boolean[nCols - 1];
+    for (int j = 0; j < nCols - 1; j++) {
+      columnHasPivot[j] = false;
+      for (int[] pivot : pivots) {
+        if (pivot[1] == j) {
+          columnHasPivot[j] = true;
+          break;
+        }
+      }
+    }
+
+    // Loop through solutions, number of solutions = columns - 1
+    int idxAlfabet = 0;
+    for (int j = 0; j < mRed.getNCols() - 1; j++) {
+      if (!columnHasPivot[j]) {
+        // This variable is a parameter
+        String param = Character.toString(alfabet[idxAlfabet % alfabet.length]);
+        int paramSeq = idxAlfabet / alfabet.length;
+
+        if (paramSeq > 0) {
+          param += "_" + paramSeq;
+        }
+
+        solutions[j] = param;
+        idxAlfabet++;
+      } else {
+        // This variable is not a parameter
+        solutions[j] += mRed.get(j, nCols - 1);
+        int paramIdx = 0;
+        for (int k = j + 1; k < nCols - 1; k++) {
+          double coeff = mRed.get(j, k);
+
+          if (coeff != 0.0) {
+            if (coeff > 0) {
+              solutions[j] += " - " + (coeff == 1.0 ? "" : (coeff + " * "));
+            } else {
+              solutions[j] += " + " + (coeff == -1.0 ? "" : (-coeff + " * "));
+            }
+
+            String param = Character.toString(alfabet[paramIdx % alfabet.length]);
+            int paramSeq = paramIdx / alfabet.length;
+
+            if (paramSeq > 0) {
+              param += "_" + paramSeq;
+            }
+
+            solutions[j] += param;
+          }
+
+          paramIdx++;
+        }
+      }
+    }
+
+    return solutions;
   }
 }

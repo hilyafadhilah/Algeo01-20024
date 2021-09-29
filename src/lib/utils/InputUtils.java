@@ -14,7 +14,7 @@ import lib.system.Interpolation;
  * @version 0.1.4
  * @since 2021-09-26
  */
-public class IOUtils {
+public class InputUtils {
   /**
    * <code>Scanner</code> of <code>stdin</code>.
    * 
@@ -107,7 +107,7 @@ public class IOUtils {
     File file = null;
     Matrix mat = null;
 
-    printSubheader("Input Matriks");
+    OutputUtils.printSubheader("Input Matriks");
     System.out.print(
         "\nMasukkan ukuran matriks dalam bilangan bulat,\n" + "dengan format \"[jumlah baris]<spasi>[jumlah kolom]\"\n"
             + "Jika matriks dalam file, masukkan path file tersebut\n\n");
@@ -190,14 +190,21 @@ public class IOUtils {
   public static Interpolation inputInterpolation() throws Exception {
     Interpolation intpl = new Interpolation();
 
-    printSubheader("Input Interpolasi");
+    OutputUtils.printSubheader("Input Interpolasi");
     System.out.print("\nMasukkan jumlah titik dalam bilangan bulat.\n"
         + "Jika titik dalam file, langsung masukkan path file tersebut.\n\n");
 
-    String line = prompt("interpolasi>");
-    Scanner lineScanner = new Scanner(line);
+    String line = "";
+    Scanner lineScanner = null;
 
     try {
+      line = prompt("interpolasi>");
+      lineScanner = new Scanner(line);
+
+      if (line.isEmpty()) {
+        throw new Exception();
+      }
+
       if (!lineScanner.hasNextInt()) {
         throw new ScanFileException();
       }
@@ -257,7 +264,7 @@ public class IOUtils {
   public static Matrix inputRegression() throws Exception {
     Matrix mat = null;
 
-    printSubheader("Input Data Regresi");
+    OutputUtils.printSubheader("Input Data Regresi");
     System.out.print("\nMasukkan jumlah sampel dan variabel bebas dalam bilangan bulat,\n"
         + "dengan format \"[jumlah sampel]<spasi>[jumlah variabel]\"\n"
         + "Jika data regresi dalam file, masukkan path file tersebut\n\n");
@@ -293,65 +300,5 @@ public class IOUtils {
     }
 
     return mat;
-  }
-
-  /**
-   * Display a header with a specified title and padding.
-   * 
-   * @param title   Title
-   * @param padding Padding character/string
-   */
-  public static void printHeader(String title, String padding) {
-    int n = (60 - title.length() - 4) / 2;
-    String header = "";
-
-    if (n > 0) {
-      String dashes = repeat(padding, n);
-      header = String.format("\n %s %s %s \n", dashes, title, dashes);
-    } else {
-      header = '\n' + title + '\n';
-    }
-
-    System.out.print(header);
-  }
-
-  /**
-   * Display a header with a specified title.
-   * 
-   * @param title The title
-   */
-  public static void printHeader(String title) {
-    printHeader(title, "=");
-  }
-
-  /**
-   * Display a subheader with a specified title.
-   * 
-   * @param title The title
-   */
-  public static void printSubheader(String title) {
-    printHeader(title, "-");
-  }
-
-  /**
-   * Display a divider
-   */
-  public static void printDivider() {
-    System.out.println(repeat("=", 60));
-  }
-
-  /**
-   * Repeats a string, <code>n</code> number of times.
-   * 
-   * @param str The string to be repeated
-   * @param n   The number of repetition
-   * @return The repeated string
-   */
-  public static String repeat(String str, int n) {
-    String result = "";
-    for (int i = 0; i < n; i++) {
-      result += str;
-    }
-    return result;
   }
 }

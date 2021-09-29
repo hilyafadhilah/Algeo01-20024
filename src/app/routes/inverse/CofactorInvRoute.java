@@ -2,7 +2,7 @@ package app.routes.inverse;
 
 import lib.router.Route;
 import lib.matrix.Matrix;
-import lib.utils.IOUtils;
+import lib.utils.InputUtils;
 
 public class CofactorInvRoute extends Route {
   public CofactorInvRoute(String key) {
@@ -10,7 +10,7 @@ public class CofactorInvRoute extends Route {
   }
 
   public void run() throws Exception {
-    Matrix m = IOUtils.inputMatrix(true);
+    Matrix m = InputUtils.inputMatrix(true);
     Matrix mInvers = m.invers();
     System.out.println("Hasil Matriks Invers : ");
     System.out.println();

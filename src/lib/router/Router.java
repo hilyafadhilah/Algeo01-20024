@@ -2,7 +2,8 @@ package lib.router;
 
 import java.util.List;
 
-import lib.utils.IOUtils;
+import lib.utils.InputUtils;
+import lib.utils.OutputUtils;
 import lib.utils.CollectionUtils;
 
 /**
@@ -48,11 +49,11 @@ public class Router {
       Route route = null;
 
       do {
-        IOUtils.printHeader(title);
+        OutputUtils.printHeader(title);
         displayMenu(routes);
 
         try {
-          String key = IOUtils.prompt("menu>");
+          String key = InputUtils.prompt("menu>");
           route = CollectionUtils.find(routes, r -> r.getKey().equals(key));
 
           if (route != null) {

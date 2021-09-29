@@ -1,11 +1,13 @@
 package app.routes.system;
 
 import lib.matrix.Matrix;
+
+import java.util.Arrays;
 import java.util.Vector;
 import lib.router.Route;
 import lib.system.LinearSystem;
 import lib.system.LinearSystem.SolutionType;
-import lib.utils.IOUtils;
+import lib.utils.InputUtils;
 
 public class GaussRoute extends Route {
   public GaussRoute(String key) {
@@ -16,7 +18,7 @@ public class GaussRoute extends Route {
     char alfabet[] = { 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's',
         't', 'u', 'v', 'w', 'x', 'y', 'z' };
 
-    Matrix m = IOUtils.inputMatrix();
+    Matrix m = InputUtils.inputMatrix();
     Matrix mEchelon = m.toEchelon();
     SolutionType type = LinearSystem.checkSolutionType(mEchelon);
     System.out.println();
@@ -130,9 +132,96 @@ public class GaussRoute extends Route {
           idxalfabet++;
         }
       }
+      System.out.println("\n" + Arrays.toString(solveInfinite(mEchelon)));
     } else {
       System.out.println("Tidak ada solusi");
     }
     System.out.println();
+  }
+
+  private String[] solveInfinite(Matrix mEchelon) {
+    char alfabet[] = { 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's',
+        't', 'u', 'v', 'w', 'x', 'y', 'z' };
+
+    int nCols = mEchelon.getNCols();
+    String[] solutions = new String[nCols - 1];
+    Vector<int[]> pivots = mEchelon.getPivots();
+    int[] pivotMap = new int[nCols - 1];
+
+    // Check if each columns contains a pivot
+    // Keep in mind, column with no pivot is a parameter
+    for (int j = 0; j < nCols - 1; j++) {
+      pivotMap[j] = -1;
+      for (int[] pivot : pivots) {
+        if (pivot[1] == j) {
+          pivotMap[j] = pivot[0];
+          break;
+        }
+      }
+    }
+
+    // Loop through solutions, number of solutions = columns - 1
+    int idxAlfabet = 0;
+    for (int j = 0; j < nCols - 1; j++) {
+      if (pivotMap[j] == -1) {
+        // This variable is a parameter
+        String param = Character.toString(alfabet[idxAlfabet % alfabet.length]);
+        int paramSeq = idxAlfabet / alfabet.length;
+
+        if (paramSeq > 0) {
+          param += "_" + paramSeq;
+        }
+
+        solutions[j] = param;
+        idxAlfabet++;
+      } else {
+        // This variable is not a parameter
+        Vector<Double> row = mEchelon.getRowCopy(pivotMap[j]);
+
+        // Do backwards substitution
+        for (int i = j + 1; i < nCols - 1; i++) {
+          if (pivotMap[i] == -1) {
+            // This variable is not a parameter, subtitute the real value
+            for (int k = 0; k < nCols; k++) {
+              double tempVal = row.get(k) - mEchelon.get(j, i) * mEchelon.get(i, k);
+              row.set(k, tempVal);
+            }
+          }
+        }
+
+        // Rightmost value is now the final constant
+        solutions[j] = row.get(nCols - 1).toString();
+
+        // Insert params
+        int paramIdx = 0;
+        for (int i = j + 1; i < nCols - 1; i++) {
+          if (pivotMap[i] == -1) {
+            // This variable is a parameter
+            double coeff = row.get(i);
+
+            if (coeff != 0.0) {
+              if (coeff > 0) {
+                solutions[j] += " - " + (coeff == 1.0 ? "" : coeff + " * ");
+              } else {
+                solutions[j] += " + " + (coeff == -1.0 ? "" : -coeff + " * ");
+              }
+
+              String param = Character.toString(alfabet[paramIdx % alfabet.length]);
+              int paramSeq = paramIdx / alfabet.length;
+
+              if (paramSeq > 0) {
+                param += "_" + paramSeq;
+              }
+
+              solutions[j] += param;
+            }
+
+            paramIdx++;
+          }
+        }
+      }
+    }
+
+    return solutions;
   }
 }
