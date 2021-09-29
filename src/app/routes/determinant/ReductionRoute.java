@@ -11,7 +11,7 @@ public class ReductionRoute extends Route {
   }
 
   public void run() throws Exception {
-    Matrix m = IOUtils.inputMatrix(); // belum cek NxN
+    Matrix m = IOUtils.inputMatrix();
     double det = Determinant.reductionMethod(m);
     System.out.println("Determinan matriks = " + det);
   }
