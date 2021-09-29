@@ -558,7 +558,7 @@ public class Matrix {
     Matrix result = this.copy();
 
     int i = 0;
-    for (int j = 0; j < this.nCols-1 && i < this.nRows; j++) {
+    for (int j = 0; j < this.nCols && i < this.nRows; j++) {
       int pivotRow = result.pivotRowIndex(i, j);
 
       if (pivotRow != -1) {
@@ -589,7 +589,7 @@ public class Matrix {
     Vector<int[]> pivots = new Vector<>();
 
     for (int i = result.nRows - 1; i >= 0; i--) {
-      for (int j = 0; j < result.nCols -1; j++) {
+      for (int j = 0; j < result.nCols; j++) {
         if (result.get(i, j) == 1) {
           pivots.add(new int[] { i, j });
           break;
