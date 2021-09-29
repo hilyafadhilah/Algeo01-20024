@@ -24,6 +24,30 @@ public class LinearSystem {
   }
 
   /**
+   * Solve linear system using Gauss Jordan Method only if the solution is unique.
+   * 
+   * @param m The system in augmented matrix form
+   * @return List of solutions
+   * @throws Exception If solution is not unique
+   */
+  public static double[] gaussJordanUnique(Matrix m) throws Exception {
+    Matrix mRed = m.toReducedEchelon();
+
+    if (checkSolutionType(mRed) != SolutionType.UNIQUE) {
+      throw new Exception();
+    }
+
+    int nCols = mRed.getNCols();
+    double[] solutions = new double[nCols - 1];
+
+    for (int i = 0; i < nCols - 1; i++) {
+      solutions[i] = mRed.get(i, nCols - 1);
+    }
+
+    return solutions;
+  }
+
+  /**
    * Solve linear system using Cramer's rule
    * 
    * @param m The system in augmented matrix form, n x (n+1) <code>Matrix</code>
