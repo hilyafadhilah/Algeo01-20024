@@ -1,9 +1,7 @@
 package app.routes.inverse;
 
 import lib.router.Route;
-import lib.matrix.Determinant;
 import lib.matrix.Matrix;
-import lib.router.Route;
 import lib.utils.IOUtils;
 
 public class CofactorInvRoute extends Route {
@@ -15,6 +13,8 @@ public class CofactorInvRoute extends Route {
     Matrix m = IOUtils.inputMatrix(true);
     Matrix mInvers = m.invers();
     System.out.println("Hasil Matriks Invers : ");
+    System.out.println();
     System.out.print(mInvers.toString());
+    System.out.println();
   }
 }
