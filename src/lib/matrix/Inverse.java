@@ -1,6 +1,20 @@
 package lib.matrix;
 
+/**
+ * <code>Matrix</code> inverse calculator.
+ * 
+ * @author Roby Purnomo
+ * @version 0.1.1
+ * @since 2021-09-28
+ */
 public class Inverse {
+  /**
+   * Find the inverse using Gauss method
+   * 
+   * @param m A square matrix
+   * @return Inverse of the matrix
+   * @throws Exception If the matrix is not square
+   */
   public static Matrix gaussMethod(Matrix m) throws Exception {
     Matrix mProcces = new Matrix(m.getNRows(), 2 * m.getNCols());
     for (int a = 0; a < mProcces.getNRows(); a++) {
@@ -24,6 +38,13 @@ public class Inverse {
     return mResult;
   }
 
+  /**
+   * Find the inverse using cofactor
+   * 
+   * @param m A square matrix
+   * @return Inverse of the matrix
+   * @throws Exception If the matrix is not square
+   */
   public static Matrix cofactorMethod(Matrix m) throws Exception {
     if (Determinant.cofactorMethod(m) != 0) {
       if (m.getNCols() == 2) {

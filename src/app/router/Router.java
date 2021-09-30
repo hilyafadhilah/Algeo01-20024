@@ -36,8 +36,6 @@ public class Router {
    * do an infinite loop until the user signals EOF or force exit, OR if the user
    * chooses a route that throws an <code>ExitException</code>.
    * 
-   * TODO: better error handling
-   * 
    * @see ExitException
    */
   public void run() {
