@@ -108,4 +108,16 @@ public class Interpolation {
 
     return max;
   }
+
+  public String toString() {
+    String str = "";
+    for (int i = 0; i < this.points.getNRows(); i++) {
+      str += String.format("(%f,%f)", this.points.get(i, 0), this.points.get(i, 1));
+
+      if (i + 1 < this.points.getNRows()) {
+        str += "\n";
+      }
+    }
+    return str;
+  }
 }

@@ -48,9 +48,9 @@ public class Solution {
         double coeff = this.parameters.get(param);
 
         if (coeff != 0.0) {
-          if (coeff > 0 && !str.isEmpty()) {
+          if (coeff > 0.0 && !str.isEmpty()) {
             str += " + ";
-          } else {
+          } else if (coeff < 0.0) {
             str += str.isEmpty() ? "-" : " - ";
           }
 

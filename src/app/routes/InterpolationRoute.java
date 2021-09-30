@@ -4,6 +4,7 @@ import lib.matrix.Matrix;
 import lib.router.Route;
 import java.lang.Math;
 import lib.utils.InputUtils;
+import lib.utils.Printer;
 import lib.system.LinearSystem;
 import lib.system.Solution;
 import lib.system.LinearSystem.SolutionType;
@@ -16,42 +17,54 @@ public class InterpolationRoute extends Route {
 
   public void run() throws Exception {
     Interpolation Input = InputUtils.inputInterpolation();
-    Matrix m = ConvertMatrix(Input.getPoints()).toReducedEchelon();
+    Matrix m = ConvertMatrix(Input.getPoints());
     double x = Input.getSearchValue();
 
+    Printer printer = new Printer();
+    printer.printHeader("Interpolasi Polinom");
+
     if (LinearSystem.checkSolutionType(m) == SolutionType.UNIQUE) {
-      Solution[] result = LinearSystem.gaussJordanUnique(m);
-      System.out.println("Hasil Polinom : ");
-      System.out.println();
-      System.out.print("y(x) = ");
+      Solution[] result = LinearSystem.gaussJordanUnique(m.toReducedEchelon());
+
+      printer.printSubheader("Input Dataset");
+      printer.print("\n" + Input + "\n");
+      printer.print("\nNilai yang ingin ditaksir = " + x + "\n");
+      printer.printSubheader("Representasi Matriks");
+      printer.print("\n" + m + "\n");
+
+      printer.printSubheader("Persamaan Interpolasi Polinom");
+      printer.print("\ny(x) = ");
       for (int i = 0; i < result.length; i++) {
         double value = result[i].constant;
+
         if (i == 0) {
-          System.out.print(value + " ");
-        } else if (i == 1) {
-          if (value > 0) {
-            System.out.print("+ " + value + "x ");
-          } else if (value == 0) {
-            System.out.print("+ " + value);
-          } else {
-            System.out.print("- " + -value + "x ");
-          }
+          printer.print(value);
         } else {
-          if (value > 0) {
-            System.out.print("+ " + value + "x^(" + i + ") ");
-          } else if (value == 0) {
-            System.out.print("+ " + value);
-          } else {
-            System.out.print("- " + -value + "x^(" + i + ") ");
+          printer.print(" ");
+
+          if (value > 0.0) {
+            printer.print("+ " + value);
+          } else if (value < 0.0) {
+            printer.print("- " + -value);
+          }
+
+          printer.print(" * x");
+
+          if (i > 1) {
+            printer.print("^(" + i + ")");
           }
         }
       }
-      System.out.println();
+      printer.print("\n");
+
       double sum = 0.0;
       for (int i = 0; i < result.length; i++) {
         sum += result[i].constant * Math.pow(x, i);
       }
-      System.out.println("y(" + x + ") = " + sum);
+
+      printer.printSubheader("Hasil Taksiran");
+      printer.print("\ny(" + x + ") = " + sum + "\n");
+      printer.toFile();
     }
   }
 

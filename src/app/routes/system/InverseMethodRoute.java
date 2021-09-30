@@ -1,8 +1,10 @@
 package app.routes.system;
 
+import lib.matrix.Inverse;
 import lib.matrix.Matrix;
 import lib.router.Route;
 import lib.utils.InputUtils;
+import lib.utils.Printer;
 import lib.system.LinearSystem;
 import lib.system.Solution;
 
@@ -13,14 +15,19 @@ public class InverseMethodRoute extends Route {
 
   public void run() throws Exception {
     Matrix m = InputUtils.inputMatrix();
-    // Matrix m dipecah dalam bentuk AX = B
-    // Yakni mA = A, mB = B, X = solusi
     Solution[] result = LinearSystem.inverseMethod(m);
-    System.out.println("Hasil SPL dengan Metode Invers : ");
-    System.out.println();
-    for (int i = 0; i < result.length; i++) {
-      System.out.println("x_" + i + " = " + result[i]);
-    }
-    System.out.println();
+    Matrix mInv = Inverse.cofactorMethod(m.subMatrix(0, 0, m.getNRows(), m.getNCols() - 1));
+
+    Printer printer = new Printer();
+    printer.printHeader("Solusi SPL: Metode Invers");
+    printer.printSubheader("Input SPL");
+    printer.print("\n" + LinearSystem.toString(m) + "\n");
+    printer.printSubheader("Representasi Matriks");
+    printer.print("\n" + m + "\n");
+    printer.printSubheader("Invers Matriks Koefisien");
+    printer.print("\n" + mInv + "\n");
+    printer.printSubheader("Solusi SPL");
+    printer.print("\n" + LinearSystem.solutionString(result) + "\n");
+    printer.toFile();
   }
 }

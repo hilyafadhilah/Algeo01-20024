@@ -6,6 +6,7 @@ import lib.system.LinearSystem;
 import lib.system.Solution;
 import lib.system.LinearSystem.SolutionType;
 import lib.utils.InputUtils;
+import lib.utils.Printer;
 
 public class GaussJordanRoute extends Route {
   public GaussJordanRoute(String key) {
@@ -17,13 +18,20 @@ public class GaussJordanRoute extends Route {
     Matrix mReducedEchelon = m.toReducedEchelon();
     SolutionType type = LinearSystem.checkSolutionType(mReducedEchelon);
 
-    System.out.println();
-    System.out.println("Matriks Eselon Tereduksi :");
-    System.out.println(mReducedEchelon);
-    System.out.println();
+    Printer printer = new Printer();
+    printer.printHeader("Solusi SPL: Metode Gauss-Jordan");
+    printer.printSubheader("Input SPL");
+    printer.print("\n" + LinearSystem.toString(m) + "\n");
+    printer.printSubheader("Representasi Matriks");
+    printer.print("\n" + m + "\n");
+    printer.printSubheader("Matriks Eselon Baris");
+    printer.print("\n" + m.toEchelon() + "\n");
+    printer.printSubheader("Matriks Eselon Baris Tereduksi");
+    printer.print("\n" + mReducedEchelon + "\n");
+    printer.printSubheader("Solusi SPL");
 
     if (type == SolutionType.NONE) {
-      System.out.println("Tidak ada solusi");
+      printer.println("\nSPL tidak memiliki solusi.");
     } else {
       Solution[] solutions;
 
@@ -33,12 +41,9 @@ public class GaussJordanRoute extends Route {
         solutions = LinearSystem.gaussJordanInfinite(mReducedEchelon);
       }
 
-      System.out.println("Solusi :");
-      for (int i = 0; i < solutions.length; i++) {
-        System.out.println("x_" + i + " = " + solutions[i]);
-      }
+      printer.print("\n" + LinearSystem.solutionString(solutions) + "\n");
     }
 
-    System.out.println();
+    printer.toFile();
   }
 }

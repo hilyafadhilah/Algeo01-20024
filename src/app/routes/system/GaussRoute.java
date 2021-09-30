@@ -7,6 +7,7 @@ import lib.system.LinearSystem;
 import lib.system.Solution;
 import lib.system.LinearSystem.SolutionType;
 import lib.utils.InputUtils;
+import lib.utils.Printer;
 
 public class GaussRoute extends Route {
   public GaussRoute(String key) {
@@ -17,13 +18,19 @@ public class GaussRoute extends Route {
     Matrix m = InputUtils.inputMatrix();
     Matrix mEchelon = m.toEchelon();
     SolutionType type = LinearSystem.checkSolutionType(mEchelon);
-    System.out.println();
-    System.out.println("Matriks Eselon :");
-    System.out.println(mEchelon);
-    System.out.println();
+
+    Printer printer = new Printer();
+    printer.printHeader("Solusi SPL: Metode Gauss");
+    printer.printSubheader("Input SPL");
+    printer.print("\n" + LinearSystem.toString(m) + "\n");
+    printer.printSubheader("Representasi Matriks");
+    printer.print("\n" + m + "\n");
+    printer.printSubheader("Matriks Eselon Baris");
+    printer.print("\n" + mEchelon + "\n");
+    printer.printSubheader("Solusi SPL");
 
     if (type == SolutionType.NONE) {
-      System.out.println("Tidak ada solusi");
+      printer.println("\nSPL tidak memiliki solusi.");
     } else {
       Solution[] solutions;
 
@@ -33,12 +40,9 @@ public class GaussRoute extends Route {
         solutions = LinearSystem.gaussInfinite(mEchelon);
       }
 
-      System.out.println("Solusi :");
-      for (int i = 0; i < solutions.length; i++) {
-        System.out.println("x_" + i + " = " + solutions[i]);
-      }
+      printer.print("\n" + LinearSystem.solutionString(solutions) + "\n");
     }
 
-    System.out.println();
+    printer.toFile();
   }
 }

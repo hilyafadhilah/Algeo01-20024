@@ -30,6 +30,58 @@ public class LinearSystem {
 
   protected Matrix m;
 
+  public static String toString(Matrix mAug) {
+    String str = "";
+    int nEqs = mAug.getNRows();
+    int nVars = mAug.getNCols() - 1;
+
+    for (int i = 0; i < nEqs; i++) {
+      String eqString = "";
+      double constant = mAug.get(i, mAug.getNCols() - 1);
+
+      for (int j = 0; j < nVars; j++) {
+        double coeff = mAug.get(i, j);
+
+        if (coeff != 0.0) {
+          if (coeff > 0.0 && !eqString.isEmpty()) {
+            eqString += " + ";
+          } else if (coeff < 0.0) {
+            eqString += eqString.isEmpty() ? "-" : " - ";
+          }
+
+          if (Math.abs(coeff) != 1.0) {
+            eqString += coeff + " * ";
+          }
+
+          eqString += "x_" + j;
+        }
+      }
+
+      if (!eqString.isEmpty()) {
+        str += eqString + " = " + constant;
+        if (i + 1 < nEqs) {
+          str += "\n";
+        }
+      }
+    }
+
+    return str;
+  }
+
+  public static String solutionString(Solution[] solutions) {
+    String str = "";
+
+    for (int i = 0; i < solutions.length; i++) {
+      str += "x_" + i + " = " + solutions[i];
+
+      if (i + 1 < solutions.length) {
+        str += "\n";
+      }
+    }
+
+    return str;
+  }
+
   public static Solution[] gaussUnique(Matrix mEchelon) {
     int nVars = mEchelon.getNCols() - 1;
     Solution[] solutions = new Solution[nVars];
