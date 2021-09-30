@@ -679,16 +679,15 @@ public class Matrix {
     return m;
   }
 
-
   /**
    * Multiply this matrix with another matrix. Condition: the number of columns of
    * this matrix must match the number of rows of the multiplicator.
    * 
    * @param m Multiplicator
    * @return Result
-   * @throws Exception If the size condition is not met
+   * @throws InvalidMatrixException If the size condition is not met
    */
-  public Matrix multiplyMatrix(Matrix m) throws Exception {
+  public Matrix multiplyMatrix(Matrix m) throws InvalidMatrixException {
     if (this.getNCols() == m.getNRows()) {
       Matrix mResult = new Matrix(this.getNRows(), m.getNCols());
       for (int i = 0; i < mResult.getNRows(); i++) {
@@ -702,7 +701,7 @@ public class Matrix {
       }
       return mResult;
     } else {
-      throw new Exception();
+      throw new InvalidMatrixException();
     }
   }
 }

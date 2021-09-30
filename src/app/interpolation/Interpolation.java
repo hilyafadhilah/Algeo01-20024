@@ -109,6 +109,9 @@ public class Interpolation {
     return max;
   }
 
+  /**
+   * Convert this interpolation to string for display purposes
+   */
   public String toString() {
     String str = "";
     for (int i = 0; i < this.points.getNRows(); i++) {

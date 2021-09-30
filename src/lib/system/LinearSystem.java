@@ -13,8 +13,9 @@ import lib.system.CannotSolveException.Method;
  * 
  * @author Roby Purnomo
  * @author Jundan Haris
- * @version 0.1.0
+ * @version 0.1.4
  * @see lib.matrix.Matrix
+ * @see lib.system.Solution
  * @since 2021-09-28
  */
 public class LinearSystem {
@@ -25,11 +26,19 @@ public class LinearSystem {
     UNIQUE, INFINITE, NONE
   }
 
+  /**
+   * List of letters for parameter naming
+   */
   private static final char alfabet[] = { 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o',
       'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z' };
 
-  protected Matrix m;
-
+  /**
+   * Convert an augmented matrix of a system to equations string for display
+   * purpose
+   * 
+   * @param mAug The system in augmented matrix form
+   * @return String representing the equations
+   */
   public static String toString(Matrix mAug) {
     String str = "";
     int nEqs = mAug.getNRows();
@@ -68,6 +77,12 @@ public class LinearSystem {
     return str;
   }
 
+  /**
+   * Convert array of <code>Solution</code> into string
+   * 
+   * @param solutions The <code>Solution</code> array
+   * @return The solution as equations string
+   */
   public static String solutionString(Solution[] solutions) {
     String str = "";
 
@@ -82,6 +97,13 @@ public class LinearSystem {
     return str;
   }
 
+  /**
+   * Solve linear system using Gauss method with the assumption of unique
+   * solutions.
+   * 
+   * @param mEchelon The system as augmented row echelon matrix
+   * @return Array of <code>Solution</code>, unique (no parameters)
+   */
   public static Solution[] gaussUnique(Matrix mEchelon) {
     int nVars = mEchelon.getNCols() - 1;
     Solution[] solutions = new Solution[nVars];
@@ -96,6 +118,12 @@ public class LinearSystem {
     return solutions;
   }
 
+  /**
+   * Solve linear system using gauss method, assumption: infinite solution.
+   * 
+   * @param mEchelon The system as augmented row echelon matrix
+   * @return Array of <code>Solution</code>, infinite (contains parameters)
+   */
   public static Solution[] gaussInfinite(Matrix mEchelon) {
 
     int nCols = mEchelon.getNCols();
@@ -172,11 +200,10 @@ public class LinearSystem {
   }
 
   /**
-   * Solve linear system using Gauss Jordan Method only if the solution is unique.
+   * Solve linear system using Gauss Jordan Method, assumes unique solution.
    * 
-   * @param m The system in augmented matrix form
-   * @return List of solutions
-   * @throws Exception If solution is not unique
+   * @param mRed The system in reduced row echelon augmented matrix form
+   * @return Array of <code>Solution</code>, unique (no parameters)
    */
   public static Solution[] gaussJordanUnique(Matrix mRed) {
     int nVars = mRed.getNCols() - 1;
@@ -189,6 +216,12 @@ public class LinearSystem {
     return solutions;
   }
 
+  /**
+   * Solve linear system using Gauss Jordan Method, assumes unique solution.
+   * 
+   * @param mRed The system in reduced row echelon augmented matrix form
+   * @return Array of <code>Solution</code>, infinite (contains parameters)
+   */
   public static Solution[] gaussJordanInfinite(Matrix mRed) {
     int nCols = mRed.getNCols();
     Solution[] solutions = new Solution[nCols - 1];
@@ -248,7 +281,7 @@ public class LinearSystem {
    * Solve linear system using Cramer's rule
    * 
    * @param m The system in augmented matrix form, n x (n+1) <code>Matrix</code>
-   * @return List of n solutions
+   * @return Array of <code>Solution</code>, unique (no parameters)
    * @throws Exception If system cannot be solved using this method
    */
   public static Solution[] cramerMethod(Matrix m) throws Exception {
@@ -280,6 +313,13 @@ public class LinearSystem {
     return solutions;
   }
 
+  /**
+   * Solve linear system using inverse method
+   * 
+   * @param m The system in augmented matrix form
+   * @return Array of <code>Solution</code>, unique (no parameters)
+   * @throws Exception If system cannot be solved using this method
+   */
   public static Solution[] inverseMethod(Matrix m) throws Exception {
     Matrix mA = m.subMatrix(0, 0, m.getNRows(), m.getNCols() - 1);
     Matrix mB = m.subMatrix(0, m.getNCols() - 1);
