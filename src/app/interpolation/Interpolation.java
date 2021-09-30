@@ -1,7 +1,6 @@
-package app.models;
+package app.interpolation;
 
 import lib.matrix.Matrix;
-import lib.system.InvalidInterpolationException;
 
 /**
  * Representation of an interpolation data. Points are stored as an Nx2

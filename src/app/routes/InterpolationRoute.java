@@ -4,7 +4,7 @@ import lib.matrix.Matrix;
 
 import java.lang.Math;
 
-import app.models.Interpolation;
+import app.interpolation.Interpolation;
 import app.router.Route;
 import app.utils.InputUtils;
 import app.utils.Printer;

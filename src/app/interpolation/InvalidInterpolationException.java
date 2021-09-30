@@ -1,4 +1,4 @@
-package lib.system;
+package app.interpolation;
 
 /**
  * Exception for invalid interpolation, usually upon input

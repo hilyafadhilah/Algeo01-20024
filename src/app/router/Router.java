@@ -74,7 +74,10 @@ public class Router {
       } catch (ExitException e) {
         isRunning = false;
       } catch (Exception e) {
-        e.printStackTrace();
+        System.out.println();
+        OutputUtils.printHeader("Error");
+        System.out.println(e.getMessage());
+        System.out.println();
       }
     }
   }
