@@ -709,4 +709,22 @@ public class Matrix {
       throw new InvalidMatrixException();
     }
   }
+
+  public boolean isIdentity () {
+    boolean isidentity = true;
+    for (int i = 0; i < this.nRows; i++) {
+      for (int j = 0; j < this.nCols; j++) {
+        if (i == j) {
+          if (this.get(i, j) != 1) {
+            isidentity = false;
+          }
+        } else {
+          if (this.get(i, j) != 0) {
+            isidentity = false;
+          }
+        }
+      }
+    }
+    return isidentity;
+  }
 }
