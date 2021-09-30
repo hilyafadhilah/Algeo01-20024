@@ -67,6 +67,8 @@ public class InterpolationRoute extends Route {
       printer.printSubheader("Hasil Taksiran");
       printer.print("\ny(" + x + ") = " + sum + "\n");
       printer.toFile();
+    } else {
+      throw new Exception("Tidak dapat melakukan regresi karena tidak ditemukan solusi unik.");
     }
   }
 

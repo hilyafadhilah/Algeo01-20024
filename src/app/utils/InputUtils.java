@@ -332,4 +332,37 @@ public class InputUtils {
 
     return mat;
   }
+
+  /**
+   * Input a number of variables in a line.
+   * 
+   * @param nVars The number of variables
+   * @return Array of variables
+   * @throws InvalidInputException If input invalid
+   */
+  public static double[] inputVariables(int nVars) throws InvalidInputException {
+    double[] vars = new double[nVars];
+
+    System.out.print("\nMasukkan " + nVars + " variabel, dipisahkan oleh spasi dalam satu baris.\n\n");
+
+    try {
+      String line = prompt("variabel>");
+      Scanner scanner = new Scanner(line);
+
+      int i = 0;
+      while (scanner.hasNextDouble()) {
+        vars[i] = scanner.nextDouble();
+        i++;
+      }
+      scanner.close();
+
+      if (i != nVars) {
+        throw new Exception("Jumlah variabel tidak tepat.");
+      }
+    } catch (Exception e) {
+      throw new InvalidInputException(e.getMessage());
+    }
+
+    return vars;
+  }
 }

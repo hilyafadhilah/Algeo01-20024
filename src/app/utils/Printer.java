@@ -27,7 +27,12 @@ public class Printer {
    */
   public void print(String s) {
     System.out.print(s);
-    buffer.set(buffer.size() - 1, buffer.get(buffer.size() - 1) + s);
+
+    if (buffer.size() > 0) {
+      buffer.set(buffer.size() - 1, buffer.get(buffer.size() - 1) + s);
+    } else {
+      buffer.add(s);
+    }
   }
 
   /**
