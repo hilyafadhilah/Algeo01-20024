@@ -1,10 +1,10 @@
 package app.routes.determinant;
 
+import app.router.Route;
+import app.utils.InputUtils;
+import app.utils.Printer;
 import lib.matrix.Determinant;
 import lib.matrix.Matrix;
-import lib.router.Route;
-import lib.utils.InputUtils;
-import lib.utils.Printer;
 
 public class CofactorDetRoute extends Route {
   public CofactorDetRoute(String key) {

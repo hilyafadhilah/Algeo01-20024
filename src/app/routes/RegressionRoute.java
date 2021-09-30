@@ -1,6 +1,6 @@
 package app.routes;
 
-import lib.router.Route;
+import app.router.Route;
 
 public class RegressionRoute extends Route {
   public RegressionRoute(String key) {

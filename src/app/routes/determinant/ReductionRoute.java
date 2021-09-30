@@ -1,9 +1,9 @@
 package app.routes.determinant;
 
-import lib.router.Route;
-import lib.utils.InputUtils;
-import lib.utils.Printer;
 import lib.matrix.Matrix;
+import app.router.Route;
+import app.utils.InputUtils;
+import app.utils.Printer;
 import lib.matrix.Determinant;
 
 public class ReductionRoute extends Route {

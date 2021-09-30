@@ -1,8 +1,8 @@
 package app;
 
+import app.router.Router;
 import app.routes.Routes;
-import lib.router.Router;
-import lib.utils.InputUtils;
+import app.utils.InputUtils;
 
 public class App {
   public static void main(String[] args) throws Exception {

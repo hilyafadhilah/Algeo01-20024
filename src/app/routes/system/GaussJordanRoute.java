@@ -1,12 +1,12 @@
 package app.routes.system;
 
+import app.router.Route;
+import app.utils.InputUtils;
+import app.utils.Printer;
 import lib.matrix.Matrix;
-import lib.router.Route;
 import lib.system.LinearSystem;
 import lib.system.Solution;
 import lib.system.LinearSystem.SolutionType;
-import lib.utils.InputUtils;
-import lib.utils.Printer;
 
 public class GaussJordanRoute extends Route {
   public GaussJordanRoute(String key) {

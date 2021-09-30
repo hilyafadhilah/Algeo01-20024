@@ -1,7 +1,7 @@
 package app.routes;
 
-import lib.router.ExitException;
-import lib.router.Route;
+import app.router.ExitException;
+import app.router.Route;
 
 public class ExitRoute extends Route {
   public ExitRoute(String key) {

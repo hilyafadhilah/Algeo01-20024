@@ -1,9 +1,9 @@
 package app.routes.inverse;
 
-import lib.router.Route;
 import lib.matrix.Matrix;
-import lib.utils.InputUtils;
-import lib.utils.Printer;
+import app.router.Route;
+import app.utils.InputUtils;
+import app.utils.Printer;
 import lib.matrix.Inverse;
 
 public class CofactorInvRoute extends Route {

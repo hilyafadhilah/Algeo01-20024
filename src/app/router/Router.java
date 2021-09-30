@@ -1,10 +1,10 @@
-package lib.router;
+package app.router;
 
 import java.util.List;
 
-import lib.utils.InputUtils;
-import lib.utils.OutputUtils;
-import lib.utils.CollectionUtils;
+import app.utils.CollectionUtils;
+import app.utils.InputUtils;
+import app.utils.OutputUtils;
 
 /**
  * Routing class specific to this application.

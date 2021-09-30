@@ -1,10 +1,9 @@
 package app.routes.system;
 
-import lib.router.Route;
-
+import app.router.Route;
+import app.utils.InputUtils;
+import app.utils.Printer;
 import lib.matrix.Matrix;
-import lib.utils.InputUtils;
-import lib.utils.Printer;
 import lib.system.LinearSystem;
 import lib.system.Solution;
 

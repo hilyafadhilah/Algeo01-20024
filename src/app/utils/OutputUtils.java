@@ -1,4 +1,4 @@
-package lib.utils;
+package app.utils;
 
 /**
  * Utilities for output, specific to this application.

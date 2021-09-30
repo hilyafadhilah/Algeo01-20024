@@ -2,10 +2,10 @@ package app.routes;
 
 import java.util.ArrayList;
 
+import app.router.Route;
 import app.routes.determinant.DeterminantRoute;
 import app.routes.inverse.InverseRoute;
 import app.routes.system.SystemRoute;
-import lib.router.Route;
 
 public class Routes {
   public static ArrayList<Route> getRoutes() {

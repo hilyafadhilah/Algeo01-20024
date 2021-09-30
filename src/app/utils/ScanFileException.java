@@ -1,4 +1,4 @@
-package lib.utils;
+package app.utils;
 
 /**
  * Exception to signal input reader to scan file instead

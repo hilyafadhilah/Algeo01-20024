@@ -1,4 +1,4 @@
-package lib.router;
+package app.router;
 
 /**
  * Exception to signal <code>Router</code> to exit.

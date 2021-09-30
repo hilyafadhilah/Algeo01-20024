@@ -1,4 +1,4 @@
-package lib.utils;
+package app.utils;
 
 import java.util.Collection;
 import java.util.function.Predicate;

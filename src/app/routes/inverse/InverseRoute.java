@@ -2,7 +2,7 @@ package app.routes.inverse;
 
 import java.util.Arrays;
 
-import lib.router.Route;
+import app.router.Route;
 
 public class InverseRoute extends Route {
   public InverseRoute(String key) {

@@ -2,7 +2,7 @@ package app.routes.system;
 
 import java.util.Arrays;
 
-import lib.router.Route;
+import app.router.Route;
 
 public class SystemRoute extends Route {
   public SystemRoute(String key) {

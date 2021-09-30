@@ -1,14 +1,16 @@
 package app.routes;
 
 import lib.matrix.Matrix;
-import lib.router.Route;
+
 import java.lang.Math;
-import lib.utils.InputUtils;
-import lib.utils.Printer;
+
+import app.models.Interpolation;
+import app.router.Route;
+import app.utils.InputUtils;
+import app.utils.Printer;
 import lib.system.LinearSystem;
 import lib.system.Solution;
 import lib.system.LinearSystem.SolutionType;
-import lib.system.Interpolation;
 
 public class InterpolationRoute extends Route {
   public InterpolationRoute(String key) {

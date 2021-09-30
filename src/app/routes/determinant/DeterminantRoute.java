@@ -2,7 +2,7 @@ package app.routes.determinant;
 
 import java.util.Arrays;
 
-import lib.router.Route;
+import app.router.Route;
 
 public class DeterminantRoute extends Route {
   public DeterminantRoute(String key) {

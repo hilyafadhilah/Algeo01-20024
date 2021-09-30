@@ -1,11 +1,11 @@
-package lib.utils;
+package app.utils;
 
 import java.io.File;
 import java.util.Scanner;
 
+import app.models.Interpolation;
 import lib.matrix.Matrix;
 import lib.matrix.NotSquareMatrixException;
-import lib.system.Interpolation;
 
 /**
  * Utilities for input, specific to this application.
