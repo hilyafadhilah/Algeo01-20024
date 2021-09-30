@@ -25,4 +25,14 @@ public class Inverse {
     }
     return mResult;
   }
+
+  public static Matrix CofactorMethod(Matrix m) throws Exception {
+    if (Determinant.cofactorMethod(m) != 0) {
+      Matrix mCofactor = m.toCofactor().transpose();
+      Matrix mInvers = mCofactor.divide(Determinant.cofactorMethod(m));
+      return mInvers;
+    } else {
+      throw new Exception();
+    }
+  }
 }

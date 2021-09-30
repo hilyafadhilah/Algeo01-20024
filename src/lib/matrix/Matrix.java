@@ -652,16 +652,6 @@ public class Matrix {
     return m;
   }
 
-  public Matrix invers() throws Exception {
-    Matrix m = this.copy();
-    if (Determinant.cofactorMethod(m) != 0) {
-      Matrix mCofactor = m.toCofactor().transpose();
-      Matrix mInvers = mCofactor.divide(Determinant.cofactorMethod(m));
-      return mInvers;
-    } else {
-      throw new Exception();
-    }
-  }
 
   public Matrix multiplyMatrix(Matrix m) throws Exception {
     if (this.getNCols() == m.getNRows()) {

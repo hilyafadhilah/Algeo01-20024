@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import lib.matrix.Determinant;
 import lib.matrix.Matrix;
+import lib.matrix.Inverse;
 import lib.system.CannotSolveException.Cause;
 import lib.system.CannotSolveException.Method;
 
@@ -111,5 +112,20 @@ public class LinearSystem {
     } else {
       return SolutionType.INFINITE;
     }
+  }
+
+  public static Matrix InverseMethod (Matrix m) throws Exception {
+    Matrix mA = new Matrix(m.getNRows(), m.getNCols() - 1);
+    Matrix mB = new Matrix(m.getNRows(), 1);
+
+    for (int a = 0; a < m.getNRows(); a++) {
+      mB.set(a, 0, m.get(a, m.getNCols() - 1));
+      for (int b = 0; b < mA.getNCols(); b++) {
+        mA.set(a, b, m.get(a, b));
+      }
+    }
+    Matrix mAInvers = Inverse.CofactorMethod(mA);
+    Matrix mResult = mAInvers.multiplyMatrix(mB);
+    return mResult;
   }
 }
