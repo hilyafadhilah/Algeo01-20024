@@ -4,7 +4,6 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
-import java.util.NoSuchElementException;
 
 /**
  * A printer that can save its output to a file.
@@ -28,7 +27,7 @@ public class Printer {
    */
   public void print(String s) {
     System.out.print(s);
-    buffer.add(s);
+    buffer.set(buffer.size() - 1, buffer.get(buffer.size() - 1) + s);
   }
 
   /**
@@ -38,8 +37,7 @@ public class Printer {
    * @see java.io.PrintWriter#print(Object)
    */
   public void print(Object x) {
-    System.out.print(x);
-    buffer.add(String.valueOf(x));
+    print(String.valueOf(x));
   }
 
   /**
@@ -61,8 +59,7 @@ public class Printer {
    * @see java.io.PrintWriter#println(Object)
    */
   public void println(Object x) {
-    System.out.println(x);
-    buffer.add(String.valueOf(x));
+    println(String.valueOf(x));
   }
 
   /**
@@ -75,9 +72,9 @@ public class Printer {
     System.out.print(heading);
 
     if (this.buffer.isEmpty()) {
-      this.buffer.add(heading.stripLeading());
+      this.buffer.add(heading.strip() + "\n");
     } else {
-      this.buffer.add(heading);
+      this.buffer.add("\n" + heading.strip() + "\n");
     }
   }
 
@@ -89,7 +86,12 @@ public class Printer {
   public void printSubheader(String title) {
     String heading = OutputUtils.getHeading(title, OutputUtils.subheaderPadding);
     System.out.print(heading);
-    this.buffer.add(heading.strip());
+
+    if (this.buffer.isEmpty()) {
+      this.buffer.add(heading.strip() + "\n");
+    } else {
+      this.buffer.add(heading.strip() + "\n");
+    }
   }
 
   /**
@@ -100,21 +102,33 @@ public class Printer {
    * @throws SecurityException
    */
   public void toFile() throws FileNotFoundException, SecurityException {
-    OutputUtils.printHeader("Simpan output ke dalam file?");
-    System.out.println("\nJika ya, masukkan path file. Jika tidak, kosongkan.");
+    System.out.println();
+    OutputUtils.printHeader("*** Simpan output ke dalam file? ***");
+    System.out.println("Jika ya, masukkan path file. Jika tidak, kosongkan.\n");
 
-    try {
-      String path = InputUtils.prompt("file>");
+    String path = InputUtils.prompt("file>");
+
+    if (!path.strip().isEmpty()) {
       File file = new File(path);
-
       PrintWriter writer = new PrintWriter(file);
+
+      // Normalize last line
+      String lastLine = this.buffer.get(this.buffer.size() - 1);
+      char lastChar = lastLine.charAt(lastLine.length() - 1);
+
+      if (lastChar == '\n') {
+        this.buffer.set(this.buffer.size() - 1, lastLine.substring(0, lastLine.length() - 1));
+      }
+
+      // Write
       for (String line : this.buffer) {
         writer.println(line);
       }
 
       writer.close();
-    } catch (NoSuchElementException e) {
-      // skip
+
+      OutputUtils.printSubheader("*** File berhasil disimpan ***");
+      System.out.println();
     }
   }
 }

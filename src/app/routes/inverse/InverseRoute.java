@@ -6,6 +6,6 @@ import lib.router.Route;
 
 public class InverseRoute extends Route {
   public InverseRoute(String key) {
-    super(key, "Matriks balikan", Arrays.asList(new GaussJordanInvRoute("1"), new CofactorInvRoute("2")));
+    super(key, "Matriks Balikan", Arrays.asList(new GaussJordanInvRoute("1"), new CofactorInvRoute("2")));
   }
 }
