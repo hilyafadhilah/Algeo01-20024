@@ -105,7 +105,7 @@ public class Solution {
           }
 
           if (Math.abs(coeff) != 1.0) {
-            str += coeff + " * ";
+            str += Math.abs(coeff) + " * ";
           }
 
           str += param;

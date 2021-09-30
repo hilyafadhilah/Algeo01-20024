@@ -40,7 +40,7 @@ public class Inverse {
     if (mIdentity.isIdentity()) {
       return mResult;
     } else {
-      throw new Exception("Matriks tidak memiliki invers");
+      throw new Exception("Matriks tidak memiliki invers.");
     }
   }
 
@@ -67,7 +67,7 @@ public class Inverse {
         return mInvers;
       }
     } else {
-      throw new Exception();
+      throw new Exception("Matriks tidak memiliki invers.");
     }
   }
 }

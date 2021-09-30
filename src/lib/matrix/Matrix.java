@@ -710,7 +710,7 @@ public class Matrix {
     }
   }
 
-  public boolean isIdentity () {
+  public boolean isIdentity() {
     boolean isidentity = true;
     for (int i = 0; i < this.nRows; i++) {
       for (int j = 0; j < this.nCols; j++) {

@@ -59,7 +59,7 @@ public class LinearSystem {
           }
 
           if (Math.abs(coeff) != 1.0) {
-            eqString += coeff + " * ";
+            eqString += Math.abs(coeff) + " * ";
           }
 
           eqString += "x_" + j;
@@ -159,7 +159,7 @@ public class LinearSystem {
         idxAlfabet++;
       } else {
         // This variable is not a parameter
-        
+
         Vector<Double> row = mEchelon.getRowCopy(pivotMap[j]);
 
         // Do backwards substitution
@@ -257,7 +257,7 @@ public class LinearSystem {
       } else {
         // This variable is not a parameter
         int row = -1;
-        for (int a = mRed.getNRows()-1; a >= 0; a--) {
+        for (int a = mRed.getNRows() - 1; a >= 0; a--) {
           if (mRed.get(a, j) == 1) {
             row = a;
           }
@@ -275,7 +275,10 @@ public class LinearSystem {
           }
 
           solutions[j].add(param, coeff);
-          paramIdx++;
+
+          if (coeff == 0.0 && !columnHasPivot[k]) {
+            paramIdx++;
+          }
         }
       }
     }
@@ -336,6 +339,10 @@ public class LinearSystem {
       throw new CannotSolveException(Method.INVERSE, Cause.NON_UNIQUE_SOLUTION);
     }
 
+    if (Determinant.cofactorMethod(mA) == 0.0) {
+      throw new CannotSolveException(Method.INVERSE, Cause.NON_UNIQUE_SOLUTION);
+    }
+
     Matrix mAInvers = Inverse.cofactorMethod(mA);
     Matrix mResult = mAInvers.multiplyMatrix(mB);
 
@@ -378,6 +385,10 @@ public class LinearSystem {
     int nRows = mEchelon.getNRows();
     int nCols = mEchelon.getNCols();
     int nVars = nCols - 1;
+
+    if (nVars < 1) {
+      return SolutionType.NONE;
+    }
 
     if (nRows < nVars) {
       return SolutionType.INFINITE;
