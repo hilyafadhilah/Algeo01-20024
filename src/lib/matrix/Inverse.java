@@ -30,12 +30,18 @@ public class Inverse {
     }
     Matrix mTemp = mProcces.toReducedEchelon();
     Matrix mResult = new Matrix(m.getNRows(), m.getNCols());
+    Matrix mIdentity = new Matrix(m.getNRows(), m.getNCols());
     for (int c = 0; c < mResult.getNRows(); c++) {
       for (int d = 0; d < mResult.getNCols(); d++) {
         mResult.set(c, d, mTemp.get(c, d + m.getNCols()));
+        mIdentity.set(c, d, mTemp.get(c, d));
       }
     }
-    return mResult;
+    if (mIdentity.isIdentity()) {
+      return mResult;
+    } else {
+      throw new Exception("Matriks tidak memiliki invers");
+    }
   }
 
   /**
