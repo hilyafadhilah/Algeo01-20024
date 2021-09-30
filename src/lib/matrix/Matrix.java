@@ -636,14 +636,19 @@ public class Matrix {
   }
 
   /**
-   * Creates a cofactor matrix of this matrix
+   * Creates a cofactor matrix of this matrix. Matrix must be square and more than
+   * 2x2 in size.
    * 
    * @return Cofactor matrix
    * @throws NotSquareMatrixException If matrix is not square
    */
-  public Matrix toCofactor() throws NotSquareMatrixException {
+  public Matrix toCofactor() throws NotSquareMatrixException, InvalidMatrixException {
     if (!this.isSquare()) {
       throw new NotSquareMatrixException();
+    }
+
+    if (this.nCols <= 2) {
+      throw new InvalidMatrixException();
     }
 
     Matrix mCofactor = this.copy();
