@@ -277,7 +277,7 @@ public class InputUtils {
    * </p>
    * 
    * @return The matrix of data regression from user input
-   * @throws Exception If input is invalid
+   * @throws InvalidInputException If input is invalid
    * @see #inputMatrix(boolean)
    */
   public static Matrix inputRegression() throws InvalidInputException {

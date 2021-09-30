@@ -1,11 +1,10 @@
 package app.routes;
 
-import java.util.Arrays;
-
 import app.router.Route;
 import lib.matrix.Matrix;
 import lib.system.Solution;
 import app.utils.InputUtils;
+import app.utils.Printer;
 import lib.system.LinearSystem;
 
 public class RegressionRoute extends Route {
@@ -16,9 +15,10 @@ public class RegressionRoute extends Route {
   public void run() throws Exception {
     Matrix m = toRegressionMatrix(InputUtils.inputRegression()).toEchelon();
     Solution[] Result = LinearSystem.gaussUnique(m);
-    double xTest[] = {1,2,3};
-    System.out.println(Arrays.toString(Result));
-    
+    double xTest[] = { 1, 2, 3 };
+
+    Printer printer = new Printer();
+
     double yResult = 0;
     System.out.print("y = ");
     for (int i = 0; i < Result.length; i++) {
@@ -31,15 +31,15 @@ public class RegressionRoute extends Route {
         } else if (Result[i].constant < 0) {
           System.out.print("- " + -Result[i].constant + " * " + "x_" + i + " ");
         }
-        yResult += Result[i].constant * xTest[i-1];
+        yResult += Result[i].constant * xTest[i - 1];
       }
     }
     System.out.println();
     System.out.println("y = " + yResult);
   }
 
-  public Matrix toRegressionMatrix (Matrix m) throws Exception {
-    Matrix mResult = new Matrix(m.getNCols(), m.getNCols()+1);
+  public Matrix toRegressionMatrix(Matrix m) throws Exception {
+    Matrix mResult = new Matrix(m.getNCols(), m.getNCols() + 1);
     for (int a = 0; a < mResult.getNRows(); a++) {
       for (int b = 0; b < mResult.getNCols(); b++) {
         double sum;
@@ -48,19 +48,19 @@ public class RegressionRoute extends Route {
         } else if (a == 0) {
           sum = 0;
           for (int c = 0; c < m.getNRows(); c++) {
-            sum += m.get(c, b-1);
+            sum += m.get(c, b - 1);
           }
           mResult.set(a, b, sum);
         } else if (b == 0) {
           sum = 0;
           for (int c = 0; c < m.getNRows(); c++) {
-            sum += m.get(c, a-1);
+            sum += m.get(c, a - 1);
           }
           mResult.set(a, b, sum);
         } else {
           sum = 0;
           for (int c = 0; c < m.getNRows(); c++) {
-            sum += m.get(c, b-1) * m.get(c, a-1);;
+            sum += m.get(c, b - 1) * m.get(c, a - 1);
           }
           mResult.set(a, b, sum);
         }
