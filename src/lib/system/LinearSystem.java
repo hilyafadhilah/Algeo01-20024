@@ -159,19 +159,19 @@ public class LinearSystem {
         idxAlfabet++;
       } else {
         // This variable is not a parameter
+        
         Vector<Double> row = mEchelon.getRowCopy(pivotMap[j]);
 
         // Do backwards substitution
         for (int i = j + 1; i < nCols - 1; i++) {
-          if (pivotMap[i] == -1) {
+          if (pivotMap[i] != -1) {
             // This variable is not a parameter, subtitute the real value
             for (int k = 0; k < nCols; k++) {
-              double tempVal = row.get(k) - mEchelon.get(j, i) * mEchelon.get(i, k);
+              double tempVal = row.get(k) - mEchelon.get(pivotMap[j], i) * mEchelon.get(pivotMap[i], k);
               row.set(k, tempVal);
             }
           }
         }
-
         // Rightmost value is now the final constant
         solutions[j] = new Solution(row.get(nCols - 1));
 
@@ -256,10 +256,16 @@ public class LinearSystem {
         idxAlfabet++;
       } else {
         // This variable is not a parameter
-        solutions[j] = new Solution(mRed.get(j, nCols - 1));
+        int row = -1;
+        for (int a = mRed.getNRows()-1; a >= 0; a--) {
+          if (mRed.get(a, j) == 1) {
+            row = a;
+          }
+        }
+        solutions[j] = new Solution(mRed.get(row, nCols - 1));
         int paramIdx = 0;
         for (int k = j + 1; k < nCols - 1; k++) {
-          double coeff = -mRed.get(j, k);
+          double coeff = -mRed.get(row, k);
 
           String param = Character.toString(alfabet[paramIdx % alfabet.length]);
           int paramSeq = paramIdx / alfabet.length;
