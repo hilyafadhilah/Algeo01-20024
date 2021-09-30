@@ -1,6 +1,5 @@
 package lib.system;
 
-import java.util.ArrayList;
 import java.util.Vector;
 
 import lib.matrix.Determinant;
@@ -37,7 +36,7 @@ public class LinearSystem {
 
     for (int i = nVars - 1; i >= 0; i--) {
       solutions[i] = new Solution(mEchelon.get(i, nVars));
-      for (int j = i + 1; j < mEchelon.getNRows(); j++) {
+      for (int j = i + 1; j < nVars; j++) {
         solutions[i].constant -= mEchelon.get(i, j) * solutions[j].constant;
       }
     }
@@ -200,7 +199,7 @@ public class LinearSystem {
    * @return List of n solutions
    * @throws Exception If system cannot be solved using this method
    */
-  public static ArrayList<Double> cramerMethod(Matrix m) throws Exception {
+  public static Solution[] cramerMethod(Matrix m) throws Exception {
     if (m.getNRows() < (m.getNCols() - 1)) {
       throw new CannotSolveException(Method.CRAMER, Cause.NON_UNIQUE_SOLUTION);
     } else if (m.getNRows() > (m.getNCols() - 1)) {
@@ -215,7 +214,7 @@ public class LinearSystem {
     }
 
     Matrix mConst = m.subMatrix(0, m.getNCols() - 1);
-    ArrayList<Double> solution = new ArrayList<>();
+    Solution[] solutions = new Solution[mCoeff.getNCols()];
 
     for (int j = 0; j < mCoeff.getNCols(); j++) {
       Matrix mTmp = mCoeff.copy();
@@ -223,25 +222,32 @@ public class LinearSystem {
         mTmp.set(i, j, mConst.get(i, 0));
       }
 
-      solution.add(Determinant.cofactorMethod(mTmp) / det);
+      solutions[j] = new Solution(Determinant.cofactorMethod(mTmp) / det);
     }
 
-    return solution;
+    return solutions;
   }
 
-  public static Matrix InverseMethod(Matrix m) throws Exception {
-    Matrix mA = new Matrix(m.getNRows(), m.getNCols() - 1);
-    Matrix mB = new Matrix(m.getNRows(), 1);
+  public static Solution[] inverseMethod(Matrix m) throws Exception {
+    Matrix mA = m.subMatrix(0, 0, m.getNRows(), m.getNCols() - 1);
+    Matrix mB = m.subMatrix(0, m.getNCols() - 1);
 
-    for (int a = 0; a < m.getNRows(); a++) {
-      mB.set(a, 0, m.get(a, m.getNCols() - 1));
-      for (int b = 0; b < mA.getNCols(); b++) {
-        mA.set(a, b, m.get(a, b));
-      }
+    if (mA.getNRows() > mA.getNCols()) {
+      throw new CannotSolveException(Method.INVERSE, Cause.TOO_MANY_EQ);
+    } else if (mA.getNRows() < mA.getNCols()) {
+      throw new CannotSolveException(Method.INVERSE, Cause.NON_UNIQUE_SOLUTION);
     }
-    Matrix mAInvers = Inverse.CofactorMethod(mA);
+
+    Matrix mAInvers = Inverse.cofactorMethod(mA);
     Matrix mResult = mAInvers.multiplyMatrix(mB);
-    return mResult;
+
+    Solution[] solutions = new Solution[mResult.getNRows()];
+
+    for (int i = 0; i < solutions.length; i++) {
+      solutions[i] = new Solution(mResult.get(i, 0));
+    }
+
+    return solutions;
   }
 
   /**

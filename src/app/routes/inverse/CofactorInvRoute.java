@@ -12,7 +12,7 @@ public class CofactorInvRoute extends Route {
 
   public void run() throws Exception {
     Matrix m = InputUtils.inputMatrix(true);
-    Matrix mInvers = Inverse.CofactorMethod(m);
+    Matrix mInvers = Inverse.cofactorMethod(m);
     System.out.println("Hasil Matriks Invers : ");
     System.out.println();
     System.out.print(mInvers.toString());
