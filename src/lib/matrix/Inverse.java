@@ -28,9 +28,19 @@ public class Inverse {
 
   public static Matrix CofactorMethod(Matrix m) throws Exception {
     if (Determinant.cofactorMethod(m) != 0) {
-      Matrix mCofactor = m.toCofactor().transpose();
-      Matrix mInvers = mCofactor.divide(Determinant.cofactorMethod(m));
-      return mInvers;
+      if (m.getNCols() == 2) {
+        Matrix mCofactor = new Matrix(2,2);
+        mCofactor.set(0, 0, m.get(1, 1));
+        mCofactor.set(0, 1, -m.get(0, 1));
+        mCofactor.set(1, 0, -m.get(1, 0));
+        mCofactor.set(1, 1, m.get(0, 0));
+        Matrix mInvers = mCofactor.divide(Determinant.cofactorMethod(m));
+        return mInvers;
+      } else {
+        Matrix mCofactor = m.toCofactor().transpose();
+        Matrix mInvers = mCofactor.divide(Determinant.cofactorMethod(m));
+        return mInvers;
+      }
     } else {
       throw new Exception();
     }
