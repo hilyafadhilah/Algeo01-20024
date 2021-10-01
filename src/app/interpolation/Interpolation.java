@@ -58,7 +58,7 @@ public class Interpolation {
    * @see {@link #searchValue}
    */
   public void setSearchValue(double value) throws InvalidInterpolationException {
-    if (value < getMinAbscissa() && value > getMaxAbscissa()) {
+    if (value < getMinAbscissa() || value > getMaxAbscissa()) {
       throw new InvalidInterpolationException();
     }
 
