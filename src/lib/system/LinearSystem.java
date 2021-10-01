@@ -166,8 +166,9 @@ public class LinearSystem {
         for (int i = j + 1; i < nCols - 1; i++) {
           if (pivotMap[i] != -1) {
             // This variable is not a parameter, subtitute the real value
+            double tempbase = row.get(i);
             for (int k = 0; k < nCols; k++) {
-              double tempVal = row.get(k) - mEchelon.get(pivotMap[j], i) * mEchelon.get(pivotMap[i], k);
+              double tempVal = row.get(k) - (tempbase * mEchelon.get(pivotMap[i], k));
               row.set(k, tempVal);
             }
           }
