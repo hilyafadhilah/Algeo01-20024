@@ -8,5 +8,7 @@ package app.interpolation;
  * @since 2021-09-28
  */
 public class InvalidInterpolationException extends Exception {
-  /* stub */
+  public InvalidInterpolationException(String msg) {
+    super(msg);
+  }
 }

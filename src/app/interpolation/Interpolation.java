@@ -33,7 +33,7 @@ public class Interpolation {
    */
   public void setPoints(Matrix p) throws InvalidInterpolationException {
     if (p.getNCols() != 2) {
-      throw new InvalidInterpolationException();
+      throw new InvalidInterpolationException("Matriks interpolasi tidak valid.");
     }
 
     this.points = p;
@@ -59,7 +59,7 @@ public class Interpolation {
    */
   public void setSearchValue(double value) throws InvalidInterpolationException {
     if (value < getMinAbscissa() || value > getMaxAbscissa()) {
-      throw new InvalidInterpolationException();
+      throw new InvalidInterpolationException("Nilai taksiran di luar range interpolasi.");
     }
 
     this.searchValue = value;
