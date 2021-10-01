@@ -143,7 +143,6 @@ public class InputUtils {
         mat = Matrix.read(stdinScanner, nRows, nCols);
       } catch (ScanFileException e) {
         try {
-          System.out.println("test");
           file = new File(line);
           Scanner scanner = new Scanner(file);
           mat = Matrix.read(scanner);

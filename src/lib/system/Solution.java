@@ -64,8 +64,8 @@ public class Solution {
    * 
    * @param param Parameter name
    */
-  public void get(String param) {
-    this.parameters.get(param);
+  public double get(String param) {
+    return this.parameters.get(param);
   }
 
   /**
