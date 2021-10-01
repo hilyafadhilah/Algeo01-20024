@@ -19,10 +19,12 @@ Program ini bertujuan untuk:
 
 Program ini ditulis dalam bahasa Java. Kode program berada di direktori `src`.
 Kode dibagi menjadi 2 yaitu pustaka `lib` dan aplikasi `app`. 
-- Pustaka berisi aneka kebutuhan aplikasi, utamanya pustaka `matrix` untuk
-  representasi dan operasi matriks.
+
+- Pustaka berisi kode general untuk melakukan perhitungan yang berhubungan
+  dengan matriks dan solusi SPL.
+
 - Aplikasi berisi alur utama program yang berinteraksi dengan pengguna
-  dengan memanfaatkan pustaka.
+  dengan memanfaatkan pustaka untuk melakukan perhitungan.
 
 ## Menjalankan Program
 
@@ -33,3 +35,38 @@ kemudian jalankan perintah berikut:
 ```
 java -cp bin app.App
 ```
+
+## Input File dan Testing
+
+Program dapat menerima input file, sebagai contoh:
+
+```
+Masukkan ukuran matriks dalam bilangan bulat,
+dengan format "[jumlah baris]<spasi>[jumlah kolom]"
+Jika matriks dalam file, masukkan path file tersebut
+
+matriks>
+```
+
+File yang dimasukkan dapat berupa absolute path maupun relative path.
+Pada repository ini telah terdapat file untuk keperluan testing pada direktori `test`.
+Karena itu jika program dijalankan pada direktori utama, maka cukup memasukkan,
+sebagai contoh:
+
+```
+matriks> test/spl_1a.txt
+```
+
+File pada direktori `test` juga telah dinamai sesuai peruntukannya.
+
+- `spl_*` merupakan input untuk pencarian solusi SPL.
+- `det_*` merupakan input untuk pencarian determinan matriks.
+- `inv_*` merupakan input untuk pencarian invers matriks.
+- `intpl_*` merupakan input untuk interpolasi polinom.
+- `reg_*` merupakan input untuk regresi linear berganda.
+
+## License
+
+[MIT](https://opensource.org/licenses/MIT)
+
+Copyright (C) 2021, Pyxis Nautica Cabang IF
