@@ -1,5 +1,7 @@
 package lib.matrix;
 
+import lib.math.DivisionByZeroException;
+
 /**
  * <code>Matrix</code> inverse calculator.
  * 
@@ -15,7 +17,7 @@ public class Inverse {
    * @return Inverse of the matrix
    * @throws Exception If the matrix is not square
    */
-  public static Matrix gaussMethod(Matrix m) throws Exception {
+  public static Matrix gaussMethod(Matrix m) throws SingularMatrixException, DivisionByZeroException {
     Matrix mProcces = new Matrix(m.getNRows(), 2 * m.getNCols());
     for (int a = 0; a < mProcces.getNRows(); a++) {
       for (int b = 0; b < mProcces.getNCols(); b++) {
@@ -40,7 +42,7 @@ public class Inverse {
     if (mIdentity.isIdentity()) {
       return mResult;
     } else {
-      throw new Exception("Matriks tidak memiliki invers.");
+      throw new SingularMatrixException("Matriks tidak memiliki invers.");
     }
   }
 
@@ -67,7 +69,7 @@ public class Inverse {
         return mInvers;
       }
     } else {
-      throw new Exception("Matriks tidak memiliki invers.");
+      throw new SingularMatrixException("Matriks tidak memiliki invers.");
     }
   }
 }
