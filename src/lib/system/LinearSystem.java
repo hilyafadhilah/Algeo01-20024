@@ -277,7 +277,7 @@ public class LinearSystem {
 
           solutions[j].add(param, coeff);
 
-          if (coeff == 0.0 && !columnHasPivot[k]) {
+          if (!columnHasPivot[k]) {
             paramIdx++;
           }
         }

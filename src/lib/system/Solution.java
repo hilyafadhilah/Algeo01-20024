@@ -113,6 +113,10 @@ public class Solution {
       }
     }
 
+    if (str.isEmpty()) {
+      str = String.valueOf(0.0);
+    }
+
     return str;
   }
 }
