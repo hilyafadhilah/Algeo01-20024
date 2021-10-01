@@ -75,6 +75,7 @@ public class Router {
         System.out.println();
         OutputUtils.printHeader("Error");
         System.out.println(e.getMessage());
+        e.printStackTrace();
         System.out.println();
       }
     }

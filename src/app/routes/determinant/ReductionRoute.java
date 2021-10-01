@@ -15,6 +15,10 @@ public class ReductionRoute extends Route {
     Matrix m = InputUtils.inputMatrix(true);
     double det = Determinant.reductionMethod(m);
 
+    if (det == 0.0) {
+      det = 0.0;
+    }
+
     Printer printer = new Printer();
     printer.printHeader("Determinan Matriks: Metode Reduksi");
     printer.printSubheader("Matriks Input");

@@ -64,14 +64,21 @@ public class Determinant {
 
     int i = 0;
     for (int j = 0; j < mTemp.getNCols() && i < mTemp.getNRows(); j++) {
+      System.out.println(mTemp + "\n");
       if (mTemp.pivotRowIndex(i, j) < mTemp.getNRows()) {
-        mTemp.swapRows(i, mTemp.pivotRowIndex(i, j));
-        if (mTemp.pivotRowIndex(i, j) != i) {
+        int pivot = mTemp.pivotRowIndex(i, j);
+
+        if (pivot != -1 && pivot != i) {
+          mTemp.swapRows(i, pivot);
           det *= -1;
         }
 
-        det *= mTemp.get(i, j);
-        mTemp.divideRow(i, mTemp.get(i, j));
+        double val = mTemp.get(i, j);
+        det *= val;
+
+        if (val != 0.0) {
+          mTemp.divideRow(i, mTemp.get(i, j));
+        }
 
         for (int k = i + 1; k < mTemp.getNRows(); k++) {
           mTemp.elementaryRowAdd(k, i, -mTemp.get(k, j));

@@ -15,6 +15,10 @@ public class CofactorDetRoute extends Route {
     Matrix m = InputUtils.inputMatrix(true);
     double det = Determinant.cofactorMethod(m);
 
+    if (det == 0.0) {
+      det = 0.0;
+    }
+
     Printer printer = new Printer();
     printer.printHeader("Determinan Matriks: Metode Kofaktor");
     printer.printSubheader("Matriks Input");
