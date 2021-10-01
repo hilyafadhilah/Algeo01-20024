@@ -30,7 +30,7 @@ public class LinearSystem {
    * List of letters for parameter naming
    */
   private static final char alfabet[] = { 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o',
-      'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z' };
+      'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'y', 'z' };
 
   /**
    * Convert an augmented matrix of a system to equations string for display
