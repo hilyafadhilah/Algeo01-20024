@@ -82,10 +82,14 @@ public class Interpolation {
    */
   public double getMinAbscissa() {
     double min = 0.0;
-    for (int i = 0; i < this.points.getNRows(); i++) {
-      double abs = this.points.get(i, 0);
-      if (abs < min) {
-        min = abs;
+
+    if (this.points.getNRows() > 0) {
+      min = this.points.get(0, 0);
+      for (int i = 1; i < this.points.getNRows(); i++) {
+        double abs = this.points.get(i, 0);
+        if (abs < min) {
+          min = abs;
+        }
       }
     }
 
@@ -99,10 +103,14 @@ public class Interpolation {
    */
   public double getMaxAbscissa() {
     double max = 0.0;
-    for (int i = 0; i < this.points.getNRows(); i++) {
-      double abs = this.points.get(i, 0);
-      if (abs > max) {
-        max = abs;
+
+    if (this.points.getNRows() > 0) {
+      max = this.points.get(0, 0);
+      for (int i = 1; i < this.points.getNRows(); i++) {
+        double abs = this.points.get(i, 0);
+        if (abs > max) {
+          max = abs;
+        }
       }
     }
 
